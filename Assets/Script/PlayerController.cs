@@ -80,6 +80,10 @@ public class PlayerController : MonoBehaviour
         }
         //Debug.Log($"{context.started}, {context.performed}, {context.canceled}");
     }
+    public void OnFire(InputAction.CallbackContext context)
+    {
+        Debug.Log("動いた");
+    }
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
