@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Build.Content;
+using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
@@ -27,12 +28,6 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         SetCountText();
         winTextObject.SetActive(false);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
     private void FixedUpdate()
     {
@@ -78,7 +73,6 @@ public class PlayerController : MonoBehaviour
         {
             m_isInitialDash = false;
         }
-        //Debug.Log($"{context.started}, {context.performed}, {context.canceled}");
     }
     void SetCountText()
     {
@@ -91,13 +85,21 @@ public class PlayerController : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
+        //アイテム獲得
         if (other.gameObject.CompareTag("PickUp"))
         {
             other.gameObject.SetActive(false);
             count += 1;
             SetCountText();
         }
+        //ゲームオーバー
+        else if (other.gameObject.CompareTag("GameOver"))
+        {
+            Debug.Log("Game Over");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
+    //敵との衝突
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
