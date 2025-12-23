@@ -6,6 +6,9 @@ TagManager:
   tags:
   - PickUp
   - Enemy
+  - RedGround
+  - BlueGround
+  - GreenGround
   layers:
   - Default
   - TransparentFX

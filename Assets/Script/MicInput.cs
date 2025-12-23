@@ -5,7 +5,7 @@ public class MicInput : MonoBehaviour
 {
     private AudioSource _audioSource;
     private string _micName;
-    public GameObject obj;
+    public GameObject redGround;
     public TextMeshProUGUI countText;
 
     void Start()
@@ -55,5 +55,9 @@ public class MicInput : MonoBehaviour
             freq = 0;
         }
         countText.text = $"Count: {maxV} \nfreq:{freq}";
+        if(freq > 300)
+        {
+            
+        }
     }
 }
