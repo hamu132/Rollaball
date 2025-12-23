@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.UI;
 [RequireComponent(typeof(AudioSource))]
 public class MicInput : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class MicInput : MonoBehaviour
     private string _micName;
     public TextMeshProUGUI countText;
     public Ground groundParent;
+    public Slider slider;
 
     void Start()
     {
@@ -57,11 +59,13 @@ public class MicInput : MonoBehaviour
             freq = 0;
         }
         countText.text = $"Count: {maxV} \nfreq:{freq}";
+        freq = Mathf.Clamp(freq,0f,1500f);
+        slider.value = freq/1500f;
         if(freq > 1200)
         {
             //何もしない
         }
-        else if(freq > 900)
+        else if(freq > 100)
         {
             groundParent.enableGround("RedGround");
         }

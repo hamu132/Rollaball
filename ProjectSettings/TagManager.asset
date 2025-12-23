@@ -10,6 +10,7 @@ TagManager:
   - BlueGround
   - GreenGround
   - Ground
+  - GameOver
   layers:
   - Default
   - TransparentFX
