@@ -9,6 +9,7 @@ TagManager:
   - RedGround
   - BlueGround
   - GreenGround
+  - Ground
   layers:
   - Default
   - TransparentFX

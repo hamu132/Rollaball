@@ -1,12 +1,13 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using TMPro;
 [RequireComponent(typeof(AudioSource))]
 public class MicInput : MonoBehaviour
 {
     private AudioSource _audioSource;
     private string _micName;
-    public GameObject redGround;
     public TextMeshProUGUI countText;
+    public Ground groundParent;
 
     void Start()
     {
@@ -23,6 +24,7 @@ public class MicInput : MonoBehaviour
             // 録音が始まるまで待機
             while (!(Microphone.GetPosition(_micName) > 0)) { }
             _audioSource.Play();
+            Debug.Log("マイク録音開始: " + _micName);
         }
         else
         {
@@ -55,9 +57,36 @@ public class MicInput : MonoBehaviour
             freq = 0;
         }
         countText.text = $"Count: {maxV} \nfreq:{freq}";
-        if(freq > 300)
+        if(freq > 1200)
         {
-            
+            //何もしない
+        }
+        else if(freq > 900)
+        {
+            groundParent.enableGround("RedGround");
+        }
+        else if(freq > 600)
+        {
+            groundParent.enableGround("BlueGround");
+        }
+        else if(freq > 300)
+        {
+            groundParent.enableGround("GreenGround");
+        }
+        else
+        {
+            //何もしない
+        }
+    }
+    public void OnFire(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            groundParent.enableGround("RedGround");
+        }
+        if (context.canceled)
+        {
+            groundParent.disableGround("RedGround");
         }
     }
 }
