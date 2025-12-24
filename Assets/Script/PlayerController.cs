@@ -21,6 +21,9 @@ public class PlayerController : MonoBehaviour
     //方向ベクトル
     private Vector3 m_moveInput;
     private Vector2 m_previousInput;
+
+    [SerializeField] private GameObject explodePrefab;
+    [SerializeField] private AudioClip gameOver;
     // Start is called before the first frame update
     void Start()
     {
@@ -96,7 +99,12 @@ public class PlayerController : MonoBehaviour
         else if (other.gameObject.CompareTag("GameOver"))
         {
             Debug.Log("Game Over");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            Explode();
+            // トランジションを開始！
+            if (SceneTransitionManager.instance != null)
+            {
+                SceneTransitionManager.instance.StartReloadSequence();
+            }
         }
     }
     //敵との衝突
@@ -108,5 +116,11 @@ public class PlayerController : MonoBehaviour
             winTextObject.gameObject.SetActive(true);
             winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
         }
+    }
+    void Explode()
+    {
+        AudioManager.instance.PlaySE(gameOver);
+        Instantiate(explodePrefab,transform.position,Quaternion.identity);
+        Destroy(gameObject);
     }
 }
