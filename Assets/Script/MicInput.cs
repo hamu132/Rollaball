@@ -58,7 +58,7 @@ public class MicInput : MonoBehaviour
         {
             freq = 0;
         }
-        countText.text = $"Count: {maxV} \nfreq:{freq}";
+        countText.text = $"volume: {maxV} \nfreq:{freq}";
         freq = Mathf.Clamp(freq,0f,1500f);
         slider.value = freq/1500f;
         if(freq > 1200)
