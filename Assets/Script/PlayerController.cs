@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+//プレイヤーオブジェクトにアタッチ
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;

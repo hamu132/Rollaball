@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
-
+//SceneManagerオブジェクトにアタッチ
 public class SceneTransitionManager : MonoBehaviour
 {
     // どこからでもアクセスできるようにする（シングルトン）

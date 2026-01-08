@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-//プレハブにアタッチ
+//RedGroundプレハブにアタッチ
 public class ChangeGroundType : MonoBehaviour
 {
     [SerializeField] private Material transMaterial;

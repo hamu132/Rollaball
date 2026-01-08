@@ -1,4 +1,5 @@
 using UnityEngine;
+//Stage1-Groundオブジェクトにアタッチ
 public class Ground : MonoBehaviour
 {
     void Start()

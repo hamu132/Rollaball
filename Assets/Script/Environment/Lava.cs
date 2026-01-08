@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class TextureScroller : MonoBehaviour
+//マグマオブジェクトにアタッチ
+public class Lava : MonoBehaviour
 {
     // スクロール速度（X方向とY方向）
     public Vector2 scrollSpeed = new Vector2(0.1f, 0.05f);

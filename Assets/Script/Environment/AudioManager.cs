@@ -1,5 +1,5 @@
 using UnityEngine;
-
+//AudioManagerオブジェクトにアタッチ
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;

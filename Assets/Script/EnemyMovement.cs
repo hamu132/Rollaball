@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+//Enemyオブジェクトにアタッチ(現在使ってない)
 public class EnemyMovement : MonoBehaviour
 {
     public Transform player;

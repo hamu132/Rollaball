@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-
+//カメラオブジェクトにアタッチ
 public class CameraController : MonoBehaviour
 {
     public GameObject player;

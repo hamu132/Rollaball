@@ -1,5 +1,5 @@
 using UnityEngine;
-
+//StageGeneratorオブジェクトにアタッチ
 public class StageGenerator : MonoBehaviour
 {
     public GameObject stagePrefab; // 生成するステージのプレハブ

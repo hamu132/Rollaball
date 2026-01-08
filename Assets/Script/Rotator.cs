@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//アイテムオブジェクトにアタッチ
 public class Rotator : MonoBehaviour
 {
 
