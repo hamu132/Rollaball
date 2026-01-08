@@ -12,7 +12,7 @@ public class MicInput : MonoBehaviour
     public Ground groundParent;
     public Slider slider;
 
-    void Start()
+    void micSetup()
     {
         _audioSource = GetComponent<AudioSource>();
 
@@ -32,8 +32,13 @@ public class MicInput : MonoBehaviour
         else
         {
             Debug.Log("マイクが接続されていません");
-        }
+        }        
     }
+    void Start()
+    {
+        micSetup();
+    }
+
     void Update()
     {
         float[] spectrum = new float[1024]; // 2の累乗である必要があります

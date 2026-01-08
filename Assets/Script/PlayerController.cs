@@ -45,6 +45,14 @@ public class PlayerController : MonoBehaviour
             rb.velocity *= 0.9f;
         }
     }
+    //キーボード入力で床を制御
+    public void OnFloor(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            Debug.Log("Floor");
+        }
+    }
     public void OnMove(InputAction.CallbackContext context)
     {
         // 1. 入力が始まった瞬間 (started)
