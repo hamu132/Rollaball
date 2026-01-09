@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine.UI;
+
 //Micオブジェクトにアタッチ
 [RequireComponent(typeof(AudioSource))]
 public class MicInput : MonoBehaviour
