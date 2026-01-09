@@ -9,7 +9,7 @@ public class MicInput : MonoBehaviour
     private AudioSource _audioSource;
     private string _micName;
     public TextMeshProUGUI countText;
-    public Ground groundParent;
+    public StageRoot groundParent;
     public Slider slider;
 
     void micSetup()

@@ -5,9 +5,14 @@ public class ChangeGroundType : MonoBehaviour
 {
     [SerializeField] private Material transMaterial;
     [SerializeField] private Material rigidMaterial;
+    GameObject stageRoot;
     void Start()
     {
         disableGround();
+        //親スクリプトにリストとして追加
+        stageRoot = transform.parent.parent.parent.gameObject;
+        stageRoot.GetComponent<StageRoot>().addList(gameObject);
+
     }
 
     public void enableGround()
