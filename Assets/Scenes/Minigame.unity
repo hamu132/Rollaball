@@ -1655,6 +1655,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RedGround
       objectReference: {fileID: 0}
+    - target: {fileID: 4220247047016449836, guid: c7ff65777ce2e834280d2b2061e0ecfd,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8864544161661359310, guid: c7ff65777ce2e834280d2b2061e0ecfd,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -4606,6 +4611,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5711885318571965113}
     m_Modifications:
+    - target: {fileID: 2141169218575256724, guid: c7ff65777ce2e834280d2b2061e0ecfd,
+        type: 3}
+      propertyPath: groundMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 63d593cbe0e5dfa499a803cccc5f1325, type: 2}
     - target: {fileID: 3909891692607504866, guid: c7ff65777ce2e834280d2b2061e0ecfd,
         type: 3}
       propertyPath: m_Name

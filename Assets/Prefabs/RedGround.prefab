@@ -118,5 +118,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea355268612de84699fd432b40e1fb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transMaterial: {fileID: 2100000, guid: d1d4e01aea104d64681cd3fc05c1e82f, type: 2}
-  rigidMaterial: {fileID: 2100000, guid: 63d593cbe0e5dfa499a803cccc5f1325, type: 2}
+  groundMaterial: {fileID: 2100000, guid: 63d593cbe0e5dfa499a803cccc5f1325, type: 2}
