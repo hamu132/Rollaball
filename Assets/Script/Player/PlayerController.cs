@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float m_initialSpeed;
     [SerializeField] private float m_normalSpeed;
     [SerializeField] private float m_decayRate;
-    private bool m_isInitialDash;
+    private bool m_isInput;
     //方向ベクトル
     private Vector3 m_moveInput;
     private Vector2 m_previousInput;
@@ -32,13 +32,23 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (m_isInitialDash)
+        if (m_isInput)
         {
-            m_currentSpeed = Mathf.Lerp(m_currentSpeed, m_normalSpeed, m_decayRate * Time.fixedDeltaTime);
+            //方向ベクトル
             Vector3 direction = new Vector3 (m_moveInput.x, 0, m_moveInput.y);
-            direction *= m_currentSpeed;
-            direction.y = rb.velocity.y;
-            rb.velocity = direction;
+            Vector3 camForward = Camera.main.transform.forward;
+            Vector3 camRight = Camera.main.transform.right;
+            camForward.y = 0;
+            camRight.y = 0;
+            camForward.Normalize();
+            camRight.Normalize();
+            Vector3 desiredMoveDir = camForward * direction.z + camRight * direction.x;
+
+            //速度
+            m_currentSpeed = Mathf.Lerp(m_currentSpeed, m_normalSpeed, m_decayRate * Time.fixedDeltaTime);
+            desiredMoveDir *= m_currentSpeed;
+            desiredMoveDir.y = rb.velocity.y;
+            rb.velocity = desiredMoveDir;
         }
         else
         {
@@ -58,7 +68,7 @@ public class PlayerController : MonoBehaviour
         // 1. 入力が始まった瞬間 (started)
         if (context.started)
         {
-            m_isInitialDash = true;
+            m_isInput = true;
             m_currentSpeed = m_initialSpeed;
             m_moveInput = context.ReadValue<Vector2>();
             m_previousInput = m_moveInput;
@@ -80,8 +90,12 @@ public class PlayerController : MonoBehaviour
         // 3. 入力が終わった瞬間 (canceled)
         if (context.canceled)
         {
-            m_isInitialDash = false;
+            m_isInput = false;
         }
+    }
+    public void OnFire(InputAction.CallbackContext context)
+    {
+        Debug.Log("動いた");
     }
     void SetCountText()
     {
