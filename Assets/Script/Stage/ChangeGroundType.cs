@@ -4,6 +4,7 @@ using System.Collections;
 public class ChangeGroundType : MonoBehaviour
 {
     [SerializeField] private Material groundMaterial;
+    [SerializeField] private AnimationCurve introCurve; // インスペクターでグラフを設定
     private Coroutine currentCoroutine;
     GameObject stageRoot;
     void Start()
@@ -44,22 +45,28 @@ public class ChangeGroundType : MonoBehaviour
         float totalDuration = 5.0f;         // 5秒間
         float outroDuration = 0.5f;//最後
         float introDuration = 0.3f;//最初
+        float outroStartTime = totalDuration - outroDuration; // 4.5秒時点
         float elapsed = 0f;
+        float period = 1f;
 
-        groundMaterial.SetFloat("_Alpha", 0.5f);
+        groundMaterial.SetFloat("_Alpha", 0.9f);
         while (elapsed < totalDuration)
         {
             elapsed += Time.deltaTime;
+            period *= 0.999f;
             float progress = elapsed / totalDuration;
             float introProgress = Mathf.Clamp01(elapsed / introDuration);
-            float outroStartTime = totalDuration - outroDuration; // 4.5秒時点
             float outroProgress = Mathf.Clamp01((elapsed - outroStartTime) / outroDuration);
+            float periodProgress = Mathf.Clamp01(elapsed%period / period);
+
+            float periodCurveValue = introCurve.Evaluate(periodProgress);
+            float outroCurveValue = introCurve.Evaluate(outroProgress);
 
             // 1. 色の塗りつぶし (5秒かけて)
             groundMaterial.SetFloat("_FillAmount", progress);
 
             // 2. 放射（Emission）の演出 (1秒かけて 5.0 -> 0.0)
-            float emission = Mathf.Lerp(5.0f, 0.0f, introProgress);
+            float emission = Mathf.Lerp(3.0f, 0.0f, periodCurveValue);
             groundMaterial.SetFloat("_EmissionIntensity", emission);
 
             if(introDuration > elapsed)
@@ -70,9 +77,8 @@ public class ChangeGroundType : MonoBehaviour
             }
             else if(outroStartTime < elapsed)
             {
-                Debug.Log(outroProgress);
                 // 3. 見た目の大きさ（Scale）の演出 (1秒かけて 1.0 -> 0.0)
-                float visualScale = Mathf.Lerp(1.0f, 0f, outroProgress);
+                float visualScale = Mathf.Lerp(1.0f, 0f, outroCurveValue);
                 groundMaterial.SetFloat("_VisualScale", visualScale);
             }
             yield return null;
