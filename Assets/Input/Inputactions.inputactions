@@ -33,13 +33,31 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Floor",
-                    "type": "Button",
+                    "name": "Floor1",
+                    "type": "Value",
                     "id": "e979bf61-26dd-4240-bc6a-585ce5bd2b9f",
-                    "expectedControlType": "",
+                    "expectedControlType": "Vector3",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Floor2",
+                    "type": "Value",
+                    "id": "5f265ed1-8feb-46df-99ff-4259faedcf6a",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Floor3",
+                    "type": "Value",
+                    "id": "41329a05-5f81-44c5-9305-09733af7a954",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -270,29 +288,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Floor",
+                    "action": "Floor1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "bc51eac0-453b-4dd9-bb2c-96c12543f825",
+                    "id": "cba780fa-207d-42b9-9aa7-19e81726528a",
                     "path": "<Keyboard>/k",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Floor",
+                    "action": "Floor2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "7b30def7-f9a3-4c15-89cd-c7189f052935",
+                    "id": "f8023345-3d1c-4b8f-8a0b-673fc4f55431",
                     "path": "<Keyboard>/l",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Floor",
+                    "action": "Floor3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

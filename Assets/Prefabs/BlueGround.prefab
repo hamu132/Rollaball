@@ -118,7 +118,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea355268612de84699fd432b40e1fb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundMaterial: {fileID: 2100000, guid: 63d593cbe0e5dfa499a803cccc5f1325, type: 2}
+  groundMaterial: {fileID: 2100000, guid: 57bcbd7c8541022498a9f6172f3422c4, type: 2}
   introCurve:
     serializedVersion: 2
     m_Curve:

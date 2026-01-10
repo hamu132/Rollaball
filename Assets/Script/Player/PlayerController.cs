@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private GameObject explodePrefab;
     [SerializeField] private AudioClip gameOver;
+    [SerializeField] private StageRoot stageRoot;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,11 +47,25 @@ public class PlayerController : MonoBehaviour
         }
     }
     //キーボード入力で床を制御
-    public void OnFloor(InputAction.CallbackContext context)
+    public void OnFloor1(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            Debug.Log("Floor");
+            stageRoot.enableGround("RedGround");
+        }
+    }
+    public void OnFloor2(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            stageRoot.enableGround("GreenGround");
+        }
+    }
+    public void OnFloor3(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            stageRoot.enableGround("BlueGround");
         }
     }
     public void OnMove(InputAction.CallbackContext context)

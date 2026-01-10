@@ -12,6 +12,7 @@ public class ChangeGroundType : MonoBehaviour
     {
         groundMaterial.SetFloat("_VisualScale", 0.1f);
         groundMaterial.SetFloat("_Alpha", 0.95f);
+        GetComponent<Collider>().enabled = false;
         disableGround();
         //親スクリプトにリストとして追加
         stageRoot = transform.parent.parent.parent.gameObject;
