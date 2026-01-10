@@ -9,6 +9,8 @@ public class ChangeGroundType : MonoBehaviour
     GameObject stageRoot;
     void Start()
     {
+        groundMaterial.SetFloat("_VisualScale", 0.1f);
+        groundMaterial.SetFloat("_Alpha", 0.95f);
         disableGround();
         //親スクリプトにリストとして追加
         stageRoot = transform.parent.parent.parent.gameObject;
@@ -18,29 +20,25 @@ public class ChangeGroundType : MonoBehaviour
 
     public void enableGround()
     {
-        // StopCoroutine("crack1");
-        //マテリアルを変更・コライダーを有効化
-        GetComponent<Renderer>().material = groundMaterial;
-        GetComponent<Collider>().enabled = true;
-        // StartCoroutine("crack1");
         StartFillAnimation();
     }
     public void disableGround()
     {
-        //マテリアルを変更・コライダーを無効化
-        // GetComponent<Collider>().enabled = false;
-        // groundMaterial.SetFloat("_Alpha", 0.1f);
-        // groundMaterial.SetFloat("_FillAmount", 1f);
-
+        
     }
     void StartFillAnimation()
     {
         // 既に動いている場合はリセットして再開
-        if (currentCoroutine != null) StopCoroutine(currentCoroutine);
-        currentCoroutine = StartCoroutine(FillAndHideRoutine());
+        if (currentCoroutine == null)
+        {
+            currentCoroutine = StartCoroutine(FillAndHideRoutine());
+        }
+        
     }
     IEnumerator FillAndHideRoutine()
     {
+        bool colliderFlag = true;
+        GetComponent<Collider>().enabled = true;
         //targetRenderer.enabled = true; // 表示
         float totalDuration = 5.0f;         // 5秒間
         float outroDuration = 0.5f;//最後
@@ -49,12 +47,12 @@ public class ChangeGroundType : MonoBehaviour
         float elapsed = 0f;
         float period = 1f;
 
-        groundMaterial.SetFloat("_Alpha", 0.9f);
+        
         while (elapsed < totalDuration)
         {
             elapsed += Time.deltaTime;
             period *= 0.999f;
-            float progress = elapsed / totalDuration;
+            float progress = Mathf.Clamp01(elapsed / (totalDuration-outroDuration));
             float introProgress = Mathf.Clamp01(elapsed / introDuration);
             float outroProgress = Mathf.Clamp01((elapsed - outroStartTime) / outroDuration);
             float periodProgress = Mathf.Clamp01(elapsed%period / period);
@@ -78,25 +76,17 @@ public class ChangeGroundType : MonoBehaviour
             else if(outroStartTime < elapsed)
             {
                 // 3. 見た目の大きさ（Scale）の演出 (1秒かけて 1.0 -> 0.0)
-                float visualScale = Mathf.Lerp(1.0f, 0f, outroCurveValue);
+                float visualScale = Mathf.Lerp(1.0f, 0.1f, outroCurveValue);
                 groundMaterial.SetFloat("_VisualScale", visualScale);
+
+                if (colliderFlag)
+                {
+                    GetComponent<Collider>().enabled = false;
+                    colliderFlag = false;
+                }
             }
             yield return null;
         }
-
-        // 5秒経ったら非表示
-        GetComponent<Collider>().enabled = false;
-        // groundMaterial.SetFloat("_Alpha", 0.1f);
-        // groundMaterial.SetFloat("_VisualScale", 1f);
+        currentCoroutine = null;
     }
-    // IEnumerator crack1()
-    // {
-    //     //ここに処理を書く
-
-    //     //1フレーム停止
-    //     yield return new WaitForSeconds(2);
-
-    //     //ここに再開後の処理を書く
-    //     disableGround();
-    // }
 }

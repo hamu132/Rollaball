@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 7049524564344785125}
   - component: {fileID: 2141169218575256724}
   m_Layer: 0
-  m_Name: RedGround
-  m_TagString: RedGround
+  m_Name: BlueGround
+  m_TagString: BlueGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 63d593cbe0e5dfa499a803cccc5f1325, type: 2}
+  - {fileID: 2100000, guid: 57bcbd7c8541022498a9f6172f3422c4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
