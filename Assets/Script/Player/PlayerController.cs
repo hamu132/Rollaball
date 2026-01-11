@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using Unity.VisualScripting;
 //プレイヤーオブジェクトにアタッチ
 public class PlayerController : MonoBehaviour
 {
@@ -22,14 +23,28 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private GameObject explodePrefab;
     [SerializeField] private AudioClip gameOver;
-    [SerializeField] private StageRoot stageRoot;
+    [SerializeField] private GameObject stageRootObject;
+    private StageRoot stageRoot;
+    private Transform currentStage;
+    private Transform goal;
+    private int itemNum;
+
+    //現在のステージ
+    private int stage = 0;
     // Start is called before the first frame update
     void Start()
     {
+        stageRoot = stageRootObject.GetComponent<StageRoot>();
+        //自動的に決める
+        currentStage = stageRootObject.transform.Find($"Stage{stage}");//ステージ
+        goal = currentStage.Find("Goal");//ゴール
+        itemNum = currentStage.Find("PickUpParent").childCount;//アイテムの総数
+        
         count = 0;
         rb = GetComponent<Rigidbody>();
         SetCountText();
         winTextObject.SetActive(false);
+        goal.gameObject.SetActive(false);
     }
     private void FixedUpdate()
     {
@@ -101,10 +116,10 @@ public class PlayerController : MonoBehaviour
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
-        if (count >= 10)
+        if (count >= itemNum)
         {
-            Destroy(GameObject.FindGameObjectWithTag("Enemy"));
-            winTextObject.SetActive(true);
+            goal.gameObject.SetActive(true);
+            //winTextObject.SetActive(true);
         }
     }
     void OnTriggerEnter(Collider other)
@@ -126,6 +141,10 @@ public class PlayerController : MonoBehaviour
             {
                 SceneTransitionManager.instance.StartReloadSequence();
             }
+        }
+        else if (other.gameObject.CompareTag("Goal"))
+        {
+            
         }
     }
     //敵との衝突

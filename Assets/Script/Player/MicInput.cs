@@ -88,15 +88,4 @@ public class MicInput : MonoBehaviour
             //何もしない
         }
     }
-    public void OnFire(InputAction.CallbackContext context)
-    {
-        if (context.started)
-        {
-            groundParent.enableGround("RedGround");
-        }
-        if (context.canceled)
-        {
-            groundParent.disableGround("RedGround");
-        }
-    }
 }
