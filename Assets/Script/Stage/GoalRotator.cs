@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 //ゴールオブジェクトにアタッチ
 public class GoalRotator : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class GoalRotator : MonoBehaviour
     private Vector3 targetPosition;
     private Quaternion targetRotation;
 
-
+    private bool initialized = false;
     //出現時、ちょっと演出を加えながら出現
     void Awake()
     {
@@ -25,10 +26,15 @@ public class GoalRotator : MonoBehaviour
         StartCoroutine(AnimateGoalAppearance());
     }
     // Update is called once per frame
-    // void Update()
-    // {
-    //     transform.Rotate(new Vector3(15, 30, 45) * Time.deltaTime);
-    // }
+    void Update()
+    {
+        Debug.Log(initialized);
+        if (initialized)
+        {
+
+            transform.Rotate(Vector3.up, 0.5f * rotationSpeed * Time.deltaTime);
+        }
+    }
     IEnumerator AnimateGoalAppearance()
     {
         float elapsed = 0f;
@@ -49,7 +55,7 @@ public class GoalRotator : MonoBehaviour
 
             // 3. 回転の演出
             // 残り時間に応じて回転を弱めていく（1.0 -> 0.0）
-            float currentRotation = rotationSpeed * (1f - progress);
+            float currentRotation = rotationSpeed * (1.5f - progress);
             transform.Rotate(Vector3.up, currentRotation * Time.deltaTime);
 
             yield return null;
@@ -57,7 +63,7 @@ public class GoalRotator : MonoBehaviour
 
         // 4. 最後にピタッと定位置に合わせる
         transform.position = targetPosition;
-        transform.rotation = targetRotation;
+        //transform.rotation = targetRotation;
 
         // ここで「着地完了！」のパーティクルや音を鳴らすと最高です
         PlayLandingEffect();
@@ -65,7 +71,7 @@ public class GoalRotator : MonoBehaviour
 
     void PlayLandingEffect()
     {
-        Debug.Log("ゴール出現完了！");
+        initialized = true;
         // ここにエフェクトなどの処理を書く
     }
 }
