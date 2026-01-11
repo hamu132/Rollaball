@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 1.5
-  heightOffset: 2
+  heightOffset: 3
   rotationSpeed: 720
   landingCurve:
     serializedVersion: 2

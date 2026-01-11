@@ -25,26 +25,20 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip gameOver;
     [SerializeField] private GameObject stageRootObject;
     private StageRoot stageRoot;
-    private Transform currentStage;
-    private Transform goal;
-    private int itemNum;
+    private GameDirector gameDirector;
 
     //現在のステージ
-    private int stage = 0;
     // Start is called before the first frame update
+    public void ZeroVelocity()
+    {
+        rb.velocity = Vector3.zero;
+    }
     void Start()
     {
         stageRoot = stageRootObject.GetComponent<StageRoot>();
-        //自動的に決める
-        currentStage = stageRootObject.transform.Find($"Stage{stage}");//ステージ
-        goal = currentStage.Find("Goal");//ゴール
-        itemNum = currentStage.Find("PickUpParent").childCount;//アイテムの総数
-        
+        gameDirector = stageRootObject.GetComponent<GameDirector>();
         count = 0;
         rb = GetComponent<Rigidbody>();
-        SetCountText();
-        winTextObject.SetActive(false);
-        goal.gameObject.SetActive(false);
     }
     private void FixedUpdate()
     {
@@ -116,11 +110,7 @@ public class PlayerController : MonoBehaviour
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
-        if (count >= itemNum)
-        {
-            goal.gameObject.SetActive(true);
-            //winTextObject.SetActive(true);
-        }
+
     }
     void OnTriggerEnter(Collider other)
     {
@@ -129,7 +119,7 @@ public class PlayerController : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             count += 1;
-            SetCountText();
+            gameDirector.SetItemCount(count);
         }
         //ゲームオーバー
         else if (other.gameObject.CompareTag("GameOver"))
@@ -148,15 +138,15 @@ public class PlayerController : MonoBehaviour
         }
     }
     //敵との衝突
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            Destroy(gameObject);
-            winTextObject.gameObject.SetActive(true);
-            winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
-        }
-    }
+    // void OnCollisionEnter(Collision collision)
+    // {
+    //     if (collision.gameObject.CompareTag("Enemy"))
+    //     {
+    //         Destroy(gameObject);
+    //         winTextObject.gameObject.SetActive(true);
+    //         winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
+    //     }
+    // }
     void Explode()
     {
         AudioManager.instance.PlaySE(gameOver);

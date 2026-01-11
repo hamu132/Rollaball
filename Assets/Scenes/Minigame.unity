@@ -911,7 +911,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &371858791
 Transform:
   m_ObjectHideFlags: 0
@@ -3115,6 +3115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 847495240}
+  isCameraActive: 0
 --- !u!1 &1064755657
 GameObject:
   m_ObjectHideFlags: 0
@@ -3967,6 +3968,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1472036300}
   - component: {fileID: 1472036301}
+  - component: {fileID: 1472036302}
   m_Layer: 0
   m_Name: Stage
   m_TagString: Untagged
@@ -4003,6 +4005,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 982a121128605a14bbc4d4354a838f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1472036302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1472036299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb46a2d6f7b822f4c9d4426e212083d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 847495240}
+  mainCamera: {fileID: 961739752}
+  cameraTransitionTime: 1
+  targetDistance: 5
 --- !u!4 &1478131561 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8864544161661359310, guid: c7ff65777ce2e834280d2b2061e0ecfd,

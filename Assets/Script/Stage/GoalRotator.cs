@@ -12,7 +12,7 @@ public class GoalRotator : MonoBehaviour
     private Vector3 targetPosition;
     private Quaternion targetRotation;
 
-    private bool initialized = false;
+    private bool initialized = true;
     //出現時、ちょっと演出を加えながら出現
     void Awake()
     {
@@ -22,16 +22,21 @@ public class GoalRotator : MonoBehaviour
     }
     void OnEnable()
     {
-        // Activeになった瞬間に演出開始
-        StartCoroutine(AnimateGoalAppearance());
+        //最初は何もしない
+        if (initialized)
+        {
+            initialized = false;
+        }
+        else
+        {
+            StartCoroutine(AnimateGoalAppearance());
+        }
     }
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(initialized);
         if (initialized)
         {
-
             transform.Rotate(Vector3.up, 0.5f * rotationSpeed * Time.deltaTime);
         }
     }
