@@ -109,9 +109,9 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _EmissionIntensity: 0.0055578947
+    - _EmissionIntensity: 2.8280935
     - _EnvironmentReflections: 1
-    - _FillAmount: 0.9551996
+    - _FillAmount: 0
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
@@ -119,6 +119,7 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _Position: -0.48
+    - _PositionY: 0.45
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
@@ -128,7 +129,7 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _VisualScale: 0.99962926
+    - _VisualScale: 1
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:

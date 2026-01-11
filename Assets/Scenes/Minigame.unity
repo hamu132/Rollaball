@@ -2304,7 +2304,7 @@ MonoBehaviour:
   explodePrefab: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664,
     type: 3}
   gameOver: {fileID: 8300000, guid: c196325514649f544a40d315deb3eeb5, type: 3}
-  stageRoot: {fileID: 0}
+  stageRoot: {fileID: 1472036301}
 --- !u!114 &847495247
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5161,6 +5161,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RedGround
+      objectReference: {fileID: 0}
+    - target: {fileID: 3909891692607504866, guid: c7ff65777ce2e834280d2b2061e0ecfd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5829280421607387989, guid: c7ff65777ce2e834280d2b2061e0ecfd,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5829280421607387989, guid: c7ff65777ce2e834280d2b2061e0ecfd,
+        type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8864544161661359310, guid: c7ff65777ce2e834280d2b2061e0ecfd,
         type: 3}

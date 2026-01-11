@@ -47,41 +47,48 @@ public class ChangeGroundType : MonoBehaviour
         float introDuration = 0.3f;//最初
         float outroStartTime = totalDuration - outroDuration; // 4.5秒時点
         float elapsed = 0f;
-        float period = 1f;
+
+        float phase = 0f;
 
         
         while (elapsed < totalDuration)
         {
             elapsed += Time.deltaTime;
-            period *= 0.999f;
+            //progress：トータルで0~1まで
             float progress = Mathf.Clamp01(elapsed / (totalDuration-outroDuration));
-            float introProgress = Mathf.Clamp01(elapsed / introDuration);
-            float outroProgress = Mathf.Clamp01((elapsed - outroStartTime) / outroDuration);
-            float periodProgress = Mathf.Clamp01(elapsed%period / period);
 
-            float periodCurveValue = periodCurve.Evaluate(periodProgress);
-            float introCurveValue = introCurve.Evaluate(introProgress);
-            float outroCurveValue = introCurve.Evaluate(outroProgress);
-
-            // 1. 色の塗りつぶし (5秒かけて)
             groundMaterial.SetFloat("_FillAmount", 1-progress);
+
+
+            //intro：イントロ部分で0~1まで。それ以降は1のまま。
+            float introProgress = Mathf.Clamp01(elapsed / introDuration);
+            float introCurveValue = introCurve.Evaluate(introProgress);
+
+
+            //period：0~1で周期的に動く。
+            float currentPeriod = Mathf.Lerp(1.2f, 0.3f, progress);
+            phase += Time.deltaTime / currentPeriod;
+            float pulse = phase % 1.0f;
+            float periodCurveValue = periodCurve.Evaluate(pulse);
+
+            //outro：アウトロ部分で0~1まで。それ以前は0のまま。
+            float outroProgress = Mathf.Clamp01((elapsed - outroStartTime) / outroDuration);
+            float outroCurveValue = introCurve.Evaluate(outroProgress);
             //イントロ
-            if(introDuration > elapsed)
+            if(elapsed <= introDuration)
             {
-                // 3. 見た目の大きさ（Scale）の演出 (1秒かけて 1.2 -> 1.0)
                 float visualScale = Mathf.Lerp(0.1f, 1.0f, introCurveValue);
                 groundMaterial.SetFloat("_VisualScale", visualScale);
             }
-            //メイン
-            else if (introDuration <= elapsed && elapsed <= outroStartTime)
+            //イントロかつメイン
+            if (elapsed <= outroStartTime)
             {
-                // 2. 放射（Emission）の演出 (1秒かけて 5.0 -> 0.0)
                 float emission = Mathf.Lerp(3.0f, 0.0f, periodCurveValue);
                 groundMaterial.SetFloat("_EmissionIntensity", emission);
             }
+            //アウトロ
             else if(outroStartTime < elapsed)
             {
-                // 3. 見た目の大きさ（Scale）の演出 (1秒かけて 1.0 -> 0.0)
                 float visualScale = Mathf.Lerp(1.0f, 0.1f, outroCurveValue);
                 groundMaterial.SetFloat("_VisualScale", visualScale);
 
