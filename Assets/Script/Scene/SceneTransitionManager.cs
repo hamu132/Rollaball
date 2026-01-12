@@ -38,7 +38,10 @@ public class SceneTransitionManager : MonoBehaviour
     {
         StartCoroutine(TransitionCoroutine());
     }
-
+    public void OnClick()
+    {
+        StartCoroutine(TransitionCoroutine());
+    }
     IEnumerator TransitionCoroutine()
     {
         // 1. 演出開始準備
@@ -61,7 +64,7 @@ public class SceneTransitionManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f); 
         
         // 現在のシーンを再読み込み
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("Minigame");
 
         // シーン読み込み完了待ち（最低1フレーム待つ）
         //yield return null;
