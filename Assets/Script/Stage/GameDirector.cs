@@ -17,19 +17,18 @@ public class GameDirector : MonoBehaviour
     private Transform currentStage;
     private CameraController cameraController;
     private int itemNum;
-    //現在のステージ
-    private int stage = 0;
 
     void Start()
     {
+        playerInput = player.GetComponent<PlayerInput>();
+        playerController = player.GetComponent<PlayerController>();
         cameraController = mainCamera.GetComponent<CameraController>();
-        currentStage = transform.Find($"Stage{stage}");//ステージ
+        currentStage = transform.Find($"Stage{playerController.currentStage}");//ステージ
         goal = currentStage.Find("Goal").gameObject;//ゴール
         itemNum = currentStage.Find("PickUpParent").childCount;//アイテムの総数
         goal.SetActive(false);
 
-        playerInput = player.GetComponent<PlayerInput>();
-        playerController = player.GetComponent<PlayerController>();
+
     }
     public void SetItemCount(int count)
     {
@@ -88,6 +87,7 @@ public class GameDirector : MonoBehaviour
         // ここでは単純に元に戻すと仮定
         while (elapsed < cameraTransitionTime)
         {
+            startPosition = player.transform.position + cameraController.offset;
             elapsed += Time.deltaTime;
             float t = elapsed / cameraTransitionTime;
             float smoothT = Mathf.SmoothStep(0, 1, t);

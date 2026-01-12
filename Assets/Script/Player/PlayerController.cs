@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     private GameDirector gameDirector;
 
     //現在のステージ
+    public int currentStage = 1;
     // Start is called before the first frame update
     public void ZeroVelocity()
     {
@@ -39,6 +40,14 @@ public class PlayerController : MonoBehaviour
         gameDirector = stageRootObject.GetComponent<GameDirector>();
         count = 0;
         rb = GetComponent<Rigidbody>();
+        if (currentStage == 1)
+        {
+            transform.position = new Vector3(0,2,-90);
+        }
+        else if (currentStage == 2)
+        {
+            transform.position = new Vector3(0,34,-7);
+        }
     }
     private void FixedUpdate()
     {
@@ -137,16 +146,6 @@ public class PlayerController : MonoBehaviour
             
         }
     }
-    //敵との衝突
-    // void OnCollisionEnter(Collision collision)
-    // {
-    //     if (collision.gameObject.CompareTag("Enemy"))
-    //     {
-    //         Destroy(gameObject);
-    //         winTextObject.gameObject.SetActive(true);
-    //         winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
-    //     }
-    // }
     void Explode()
     {
         AudioManager.instance.PlaySE(gameOver);
