@@ -11,6 +11,7 @@ TagManager:
   - GreenGround
   - Ground
   - GameOver
+  - Goal
   layers:
   - Default
   - TransparentFX

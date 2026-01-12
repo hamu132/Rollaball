@@ -34,15 +34,19 @@ public class SceneTransitionManager : MonoBehaviour
     }
 
     // 外部（プレイヤーの死亡時など）からこのメソッドを呼ぶ
-    public void StartReloadSequence()
+    public void GoGame()
     {
-        StartCoroutine(TransitionCoroutine());
+        StartCoroutine(TransitionCoroutine("Minigame"));
     }
-    public void OnClick()
+    public void ReturnStart()
     {
-        StartCoroutine(TransitionCoroutine());
+        StartCoroutine(TransitionCoroutine("Title"));
     }
-    IEnumerator TransitionCoroutine()
+    public void GoEnd()
+    {
+        StartCoroutine(TransitionCoroutine("End"));
+    }
+    IEnumerator TransitionCoroutine(string str)
     {
         // 1. 演出開始準備
         transitionCanvas.SetActive(true);
@@ -64,7 +68,7 @@ public class SceneTransitionManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f); 
         
         // 現在のシーンを再読み込み
-        SceneManager.LoadScene("Minigame");
+        SceneManager.LoadScene(str);
 
         // シーン読み込み完了待ち（最低1フレーム待つ）
         //yield return null;

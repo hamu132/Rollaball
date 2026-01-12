@@ -138,12 +138,15 @@ public class PlayerController : MonoBehaviour
             // トランジションを開始！
             if (SceneTransitionManager.instance != null)
             {
-                SceneTransitionManager.instance.StartReloadSequence();
+                SceneTransitionManager.instance.GoGame();
             }
         }
         else if (other.gameObject.CompareTag("Goal"))
         {
-            
+            if (SceneTransitionManager.instance != null)
+            {
+                SceneTransitionManager.instance.GoEnd();
+            }
         }
     }
     void Explode()
