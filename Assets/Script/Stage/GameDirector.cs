@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.InputSystem; // InputActionを使うため
+using UnityEngine.InputSystem;
+using System; // InputActionを使うため
 //ステージルートにアタッチ
 public class GameDirector : MonoBehaviour
 {
@@ -35,15 +36,17 @@ public class GameDirector : MonoBehaviour
         if (count == itemNum)
         {
             cameraController.isCameraActive = false;
+            
             StartCoroutine(GoalCutsceneRoutine());
         }
     }
 
     IEnumerator GoalCutsceneRoutine()
     {
-        // 1. プレイヤーの操作を無効にする
+        // 1. プレイヤーの操作を無効にする・足場の時間を止める
         playerInput.DeactivateInput(); 
         playerController.ZeroVelocity();
+        ChangeGroundType.isTimePaused = true;
 
 
         // 1. 開始時の位置と回転を記録
@@ -52,13 +55,15 @@ public class GameDirector : MonoBehaviour
 
         // 2. 終了時の位置と回転を計算
         Vector3 goalPosition = goal.transform.position;
-        Debug.Log(goalPosition);
         
         // ゴールからカメラへの方向ベクトル（正規化して長さを1にする）
-        Vector3 dirToCamera = (startPosition - goalPosition).normalized;
+        Vector3 dirToCamera = startPosition - goalPosition;
+        dirToCamera.y = 0;
+        dirToCamera = dirToCamera.normalized;
         
         // 終了座標：ゴールの位置 + (カメラへの方向 * 指定距離)
         Vector3 endPosition = goalPosition + (dirToCamera * targetDistance);
+        endPosition.y = goalPosition.y + targetDistance*Mathf.Tan(10);
         
         // 終了回転：その位置からゴールを見る回転
         Quaternion endRotation = Quaternion.LookRotation(goalPosition - endPosition);
@@ -99,5 +104,6 @@ public class GameDirector : MonoBehaviour
         // 6. プレイヤーの操作を有効に戻す
         playerInput.ActivateInput();
         cameraController.isCameraActive = true;
+        ChangeGroundType.isTimePaused = false;
     }
 }

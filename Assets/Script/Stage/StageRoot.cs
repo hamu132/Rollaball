@@ -21,7 +21,7 @@ public class StageRoot : MonoBehaviour
     {
         foreach (var ground in groundObject) {
             if (ground.CompareTag(tag)){
-                ground.GetComponent<ChangeGroundType>().disableGround();
+                //ground.GetComponent<ChangeGroundType>().disableGround();
             }
         }
     }
