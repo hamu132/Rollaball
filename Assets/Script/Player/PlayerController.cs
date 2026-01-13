@@ -138,10 +138,12 @@ public class PlayerController : MonoBehaviour
                 SceneTransitionManager.instance.IrisOust("MiniGame");
             }
         }
+        //ゴール到達
         else if (other.gameObject.CompareTag("Goal"))
         {
             if (SceneTransitionManager.instance != null)
             {
+                other.enabled = false;
                 ZeroVelocity();
                 playerInput.DeactivateInput(); 
                 SceneTransitionManager.instance.IrisOust("End");
