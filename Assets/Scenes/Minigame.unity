@@ -1666,7 +1666,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &727505267
 Transform:
   m_ObjectHideFlags: 0
@@ -3640,7 +3640,7 @@ MonoBehaviour:
   mainCamera: {fileID: 961739752}
   cameraTransitionTime: 1
   targetDistance: 10
-  currentStage: 1
+  currentStage: 2
 --- !u!4 &1478131561 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8864544161661359310, guid: c7ff65777ce2e834280d2b2061e0ecfd,
