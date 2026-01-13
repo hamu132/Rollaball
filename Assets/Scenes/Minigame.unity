@@ -1341,7 +1341,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &628525213
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1984,7 +1984,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 071a78fd7774c8b479e2caa7958765ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  countText: {fileID: 1348941665}
   m_initialSpeed: 20
   m_normalSpeed: 3
   m_decayRate: 5
@@ -2949,7 +2948,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1160234425}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
   m_Name: 
@@ -3638,6 +3637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 847495240}
   mainCamera: {fileID: 961739752}
+  countText: {fileID: 1348941665}
   cameraTransitionTime: 1
   targetDistance: 10
   currentStage: 2
@@ -4315,7 +4315,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1852329886
 MonoBehaviour:
   m_ObjectHideFlags: 0

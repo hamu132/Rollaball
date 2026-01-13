@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
 using System; // InputActionを使うため
+using TMPro;
 //ステージルートにアタッチ
 public class GameDirector : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class GameDirector : MonoBehaviour
     private PlayerInput playerInput;    // プレイヤーのInputAction
     private GameObject goal;      // ゴールのオブジェクト
     private PlayerController playerController;
+    public TextMeshProUGUI countText;
 
     [Header("演出設定")]
     [SerializeField] private float cameraTransitionTime = 1.0f; // カメラが向くまでの時間
@@ -31,6 +33,7 @@ public class GameDirector : MonoBehaviour
     }
     public void SetItemCount(int count)
     {
+        countText.text = "Count: " + count.ToString() + "/" + itemNum;
         if (count == itemNum)
         {
             cameraController.isCameraActive = false;
@@ -38,7 +41,6 @@ public class GameDirector : MonoBehaviour
             StartCoroutine(GoalCutsceneRoutine());
         }
     }
-
     IEnumerator GoalCutsceneRoutine()
     {
         // 1. プレイヤーの操作を無効にする・足場の時間を止める
