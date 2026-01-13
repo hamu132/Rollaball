@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private int count;
     public TextMeshProUGUI countText;
-    public GameObject winTextObject;
     //現在の速度、激しい初速、収束後の速度、速度変化割合
     private float m_currentSpeed;
     [SerializeField] private float m_initialSpeed;
@@ -26,6 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject stageRootObject;
     private StageRoot stageRoot;
     private GameDirector gameDirector;
+    private PlayerInput playerInput;
     // Start is called before the first frame update
     public void ZeroVelocity()
     {
@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     }
     void Start()
     {
+        playerInput = GetComponent<PlayerInput>();
         stageRoot = stageRootObject.GetComponent<StageRoot>();
         gameDirector = stageRootObject.GetComponent<GameDirector>();
         count = 0;
@@ -116,7 +117,6 @@ public class PlayerController : MonoBehaviour
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
-
     }
     void OnTriggerEnter(Collider other)
     {
@@ -135,14 +135,16 @@ public class PlayerController : MonoBehaviour
             // トランジションを開始！
             if (SceneTransitionManager.instance != null)
             {
-                SceneTransitionManager.instance.GoGame();
+                SceneTransitionManager.instance.IrisOust("MiniGame");
             }
         }
         else if (other.gameObject.CompareTag("Goal"))
         {
             if (SceneTransitionManager.instance != null)
             {
-                SceneTransitionManager.instance.GoEnd();
+                ZeroVelocity();
+                playerInput.DeactivateInput(); 
+                SceneTransitionManager.instance.IrisOust("End");
             }
         }
     }
