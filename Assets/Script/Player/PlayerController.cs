@@ -22,6 +22,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private GameObject explodePrefab;
     [SerializeField] private AudioClip gameOver;
+    [SerializeField] private AudioClip wall;
+    [SerializeField] private AudioClip move;
+    [SerializeField] private AudioClip item;
     [SerializeField] private GameObject stageRootObject;
     private StageRoot stageRoot;
     private GameDirector gameDirector;
@@ -103,6 +106,7 @@ public class PlayerController : MonoBehaviour
             if(m_previousInput.x * m_previousInput.y == 0)
             {
                 m_currentSpeed = m_initialSpeed;
+                AudioManager.instance.PlaySE(move,0.1f);
             }
             m_moveInput = context.ReadValue<Vector2>();
             m_previousInput = m_moveInput;
@@ -114,12 +118,20 @@ public class PlayerController : MonoBehaviour
             m_isInitialDash = false;
         }
     }
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            AudioManager.instance.PlaySE(wall,0.2f);
+        }
+    }
 
     void OnTriggerEnter(Collider other)
     {
         //アイテム獲得
         if (other.gameObject.CompareTag("PickUp"))
         {
+            AudioManager.instance.PlaySE(item,0.2f);
             other.gameObject.SetActive(false);
             count += 1;
             gameDirector.SetItemCount(count);
@@ -149,7 +161,7 @@ public class PlayerController : MonoBehaviour
     }
     void Explode()
     {
-        AudioManager.instance.PlaySE(gameOver);
+        AudioManager.instance.PlaySE(gameOver,0.2f);
         Instantiate(explodePrefab,transform.position,Quaternion.identity);
         Destroy(gameObject);
     }

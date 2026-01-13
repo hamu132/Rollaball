@@ -10,8 +10,8 @@ public class AudioManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            audioSource = GetComponent<AudioSource>();
             DontDestroyOnLoad(gameObject);
-            audioSource = gameObject.AddComponent<AudioSource>();
         }
         else
         {
@@ -20,11 +20,9 @@ public class AudioManager : MonoBehaviour
     }
 
     // 外部から音を指定して鳴らすメソッド
-    public void PlaySE(AudioClip clip)
+    public void PlaySE(AudioClip clip, float volume)
     {
-        if (clip != null)
-        {
-            audioSource.PlayOneShot(clip);
-        }
+        audioSource.volume = volume;
+        audioSource.PlayOneShot(clip);
     }
 }

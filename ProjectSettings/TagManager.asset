@@ -12,6 +12,7 @@ TagManager:
   - Ground
   - GameOver
   - Goal
+  - Wall
   layers:
   - Default
   - TransparentFX
