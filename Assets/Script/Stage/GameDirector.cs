@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
 using System; // InputActionを使うため
+using TMPro;
 //ステージルートにアタッチ
 public class GameDirector : MonoBehaviour
 {
@@ -11,28 +12,28 @@ public class GameDirector : MonoBehaviour
     private PlayerInput playerInput;    // プレイヤーのInputAction
     private GameObject goal;      // ゴールのオブジェクト
     private PlayerController playerController;
+    public TextMeshProUGUI countText;
 
     [Header("演出設定")]
     [SerializeField] private float cameraTransitionTime = 1.0f; // カメラが向くまでの時間
     [SerializeField] private float targetDistance = 5.0f;
-    private Transform currentStage;
+    private Transform currentStageTransform;
     private CameraController cameraController;
     private int itemNum;
-
+    public int currentStage = 1;
     void Start()
     {
         playerInput = player.GetComponent<PlayerInput>();
         playerController = player.GetComponent<PlayerController>();
         cameraController = mainCamera.GetComponent<CameraController>();
-        currentStage = transform.Find($"Stage{playerController.currentStage}");//ステージ
-        goal = currentStage.Find("Goal").gameObject;//ゴール
-        itemNum = currentStage.Find("PickUpParent").childCount;//アイテムの総数
+        currentStageTransform = transform.Find($"Stage{currentStage}");//ステージ
+        goal = currentStageTransform.Find("Goal").gameObject;//ゴール
+        itemNum = currentStageTransform.Find("PickUpParent").childCount;//アイテムの総数
         goal.SetActive(false);
-
-
     }
     public void SetItemCount(int count)
     {
+        countText.text = "Count: " + count.ToString() + "/" + itemNum;
         if (count == itemNum)
         {
             cameraController.isCameraActive = false;
@@ -40,7 +41,6 @@ public class GameDirector : MonoBehaviour
             StartCoroutine(GoalCutsceneRoutine());
         }
     }
-
     IEnumerator GoalCutsceneRoutine()
     {
         // 1. プレイヤーの操作を無効にする・足場の時間を止める

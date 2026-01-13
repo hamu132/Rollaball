@@ -2,15 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using TMPro;
+
 using Unity.VisualScripting;
 //プレイヤーオブジェクトにアタッチ
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
     private int count;
-    public TextMeshProUGUI countText;
-    public GameObject winTextObject;
+    
     //現在の速度、激しい初速、収束後の速度、速度変化割合
     private float m_currentSpeed;
     [SerializeField] private float m_initialSpeed;
@@ -26,9 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject stageRootObject;
     private StageRoot stageRoot;
     private GameDirector gameDirector;
-
-    //現在のステージ
-    public int currentStage = 1;
+    private PlayerInput playerInput;
     // Start is called before the first frame update
     public void ZeroVelocity()
     {
@@ -36,15 +33,16 @@ public class PlayerController : MonoBehaviour
     }
     void Start()
     {
+        playerInput = GetComponent<PlayerInput>();
         stageRoot = stageRootObject.GetComponent<StageRoot>();
         gameDirector = stageRootObject.GetComponent<GameDirector>();
         count = 0;
         rb = GetComponent<Rigidbody>();
-        if (currentStage == 1)
+        if (gameDirector.currentStage == 1)
         {
             transform.position = new Vector3(0,2,-90);
         }
-        else if (currentStage == 2)
+        else if (gameDirector.currentStage == 2)
         {
             transform.position = new Vector3(0,34,-7);
         }
@@ -116,11 +114,7 @@ public class PlayerController : MonoBehaviour
             m_isInitialDash = false;
         }
     }
-    void SetCountText()
-    {
-        countText.text = "Count: " + count.ToString();
 
-    }
     void OnTriggerEnter(Collider other)
     {
         //アイテム獲得
@@ -138,14 +132,18 @@ public class PlayerController : MonoBehaviour
             // トランジションを開始！
             if (SceneTransitionManager.instance != null)
             {
-                SceneTransitionManager.instance.GoGame();
+                SceneTransitionManager.instance.IrisOust("MiniGame");
             }
         }
+        //ゴール到達
         else if (other.gameObject.CompareTag("Goal"))
         {
             if (SceneTransitionManager.instance != null)
             {
-                SceneTransitionManager.instance.GoEnd();
+                other.enabled = false;
+                ZeroVelocity();
+                playerInput.DeactivateInput(); 
+                SceneTransitionManager.instance.IrisOust("End");
             }
         }
     }

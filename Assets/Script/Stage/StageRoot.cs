@@ -28,6 +28,5 @@ public class StageRoot : MonoBehaviour
     public void addList(GameObject gameObject)
     {
         groundObject.Add(gameObject);
-        Debug.Log(gameObject.name);
     }
 }

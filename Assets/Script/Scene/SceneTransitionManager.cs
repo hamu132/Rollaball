@@ -34,17 +34,14 @@ public class SceneTransitionManager : MonoBehaviour
     }
 
     // 外部（プレイヤーの死亡時など）からこのメソッドを呼ぶ
-    public void GoGame()
+    public void IrisOust(string sceneName)
     {
-        StartCoroutine(TransitionCoroutine("Minigame"));
+        StartCoroutine(TransitionCoroutine(sceneName));
     }
-    public void ReturnStart()
+    //ボタンをクリックしたときに呼ばれる
+    public void OnClick(string str)
     {
-        StartCoroutine(TransitionCoroutine("Title"));
-    }
-    public void GoEnd()
-    {
-        StartCoroutine(TransitionCoroutine("End"));
+        StartCoroutine(TransitionCoroutine(str));
     }
     IEnumerator TransitionCoroutine(string str)
     {
@@ -67,7 +64,7 @@ public class SceneTransitionManager : MonoBehaviour
         // 少しウェイトを入れると余韻が出ます
         yield return new WaitForSeconds(0.5f); 
         
-        // 現在のシーンを再読み込み
+        // 次のシーンを再読み込み
         SceneManager.LoadScene(str);
 
         // シーン読み込み完了待ち（最低1フレーム待つ）
