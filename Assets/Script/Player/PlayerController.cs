@@ -26,9 +26,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject stageRootObject;
     private StageRoot stageRoot;
     private GameDirector gameDirector;
-
-    //現在のステージ
-    public int currentStage = 1;
     // Start is called before the first frame update
     public void ZeroVelocity()
     {
@@ -40,11 +37,11 @@ public class PlayerController : MonoBehaviour
         gameDirector = stageRootObject.GetComponent<GameDirector>();
         count = 0;
         rb = GetComponent<Rigidbody>();
-        if (currentStage == 1)
+        if (gameDirector.currentStage == 1)
         {
             transform.position = new Vector3(0,2,-90);
         }
-        else if (currentStage == 2)
+        else if (gameDirector.currentStage == 2)
         {
             transform.position = new Vector3(0,34,-7);
         }

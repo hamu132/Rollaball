@@ -15,21 +15,19 @@ public class GameDirector : MonoBehaviour
     [Header("演出設定")]
     [SerializeField] private float cameraTransitionTime = 1.0f; // カメラが向くまでの時間
     [SerializeField] private float targetDistance = 5.0f;
-    private Transform currentStage;
+    private Transform currentStageTransform;
     private CameraController cameraController;
     private int itemNum;
-
+    public int currentStage = 1;
     void Start()
     {
         playerInput = player.GetComponent<PlayerInput>();
         playerController = player.GetComponent<PlayerController>();
         cameraController = mainCamera.GetComponent<CameraController>();
-        currentStage = transform.Find($"Stage{playerController.currentStage}");//ステージ
-        goal = currentStage.Find("Goal").gameObject;//ゴール
-        itemNum = currentStage.Find("PickUpParent").childCount;//アイテムの総数
+        currentStageTransform = transform.Find($"Stage{currentStage}");//ステージ
+        goal = currentStageTransform.Find("Goal").gameObject;//ゴール
+        itemNum = currentStageTransform.Find("PickUpParent").childCount;//アイテムの総数
         goal.SetActive(false);
-
-
     }
     public void SetItemCount(int count)
     {
