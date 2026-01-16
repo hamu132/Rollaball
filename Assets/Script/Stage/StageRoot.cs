@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public class StageRoot : MonoBehaviour
 {
     private List<GameObject> groundObject = new List<GameObject>();
+    public float mainDuration = 4.5f;
+    public static bool isTimePaused = false;
     void Start()
     {
         disableGround();

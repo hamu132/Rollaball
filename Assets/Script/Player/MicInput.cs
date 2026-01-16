@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections;
 
 [RequireComponent(typeof(AudioSource))]
 public class MicInput : MonoBehaviour
@@ -16,7 +17,7 @@ public class MicInput : MonoBehaviour
     public StageRoot stageRoot;
 
     [Header("音量感度設定")]
-    [Range(0.01f, 10.0f)] public float sensitivity = 1.0f;
+    [Range(0.01f, 30.0f)] public float sensitivity = 1.0f;
     [Range(0f, 1f)] public float thresholdR = 0.2f;
     [Range(0f, 1f)] public float thresholdG = 0.5f;
     [Range(0f, 1f)] public float thresholdB = 0.8f;
@@ -24,7 +25,7 @@ public class MicInput : MonoBehaviour
     [SerializeField] private Slider timerSliderG;
     [SerializeField] private Slider timerSliderB;
     [Header("溜め時間設定")]
-    public float requiredDuration = 0.5f; // 必要な継続時間
+    [Range(0.6f, 10.0f)]public float requiredDuration = 0.6f; // 必要な継続時間
     
     // それぞれの色の溜め時間を計測するカウンター
     private float _timerR = 0f;
@@ -33,6 +34,9 @@ public class MicInput : MonoBehaviour
 
     private float _currentVolume = 0;
     private const int SAMPLE_COUNT = 1024;
+    private Coroutine currentCoroutineR;
+    private Coroutine currentCoroutineG;
+    private Coroutine currentCoroutineB;
 
     void Start()
     {
@@ -79,42 +83,92 @@ public class MicInput : MonoBehaviour
         // 4. 床の出現判定（溜め時間のロジック）
         
         // --- 青色の判定（大声） ---
-        if (_currentVolume > thresholdB)
-        {
-            _timerB += Time.deltaTime;
-            if (_timerB >= requiredDuration)
+        if (currentCoroutineB == null){
+            if (_currentVolume > thresholdB)
             {
-                stageRoot.enableGround("BlueGround");
-                _timerB = 0f; // 発動したらタイマーをリセット
+                _timerB += Time.deltaTime;
+                if (_timerB >= requiredDuration)
+                {
+                    stageRoot.enableGround("BlueGround");
+                    currentCoroutineB = StartCoroutine(WaitCoroutineB());
+                }
             }
+            else { _timerB = 0f; } // しきい値を下回ったら即座にリセット
         }
-        else { _timerB = 0f; } // しきい値を下回ったら即座にリセット
         if (timerSliderB != null) timerSliderB.value = Mathf.Clamp01(_timerB / requiredDuration);
 
+
         // --- 緑色の判定（中声） ---
-        if (thresholdB >= _currentVolume && _currentVolume > thresholdG)
-        {
-            _timerG += Time.deltaTime;
-            if (_timerG >= requiredDuration)
+        if (currentCoroutineG == null){
+            if (thresholdB >= _currentVolume && _currentVolume > thresholdG)
             {
-                stageRoot.enableGround("GreenGround");
-                _timerG = 0f;
+                _timerG += Time.deltaTime;
+                if (_timerG >= requiredDuration)
+                {
+                    stageRoot.enableGround("GreenGround");
+                    currentCoroutineG = StartCoroutine(WaitCoroutineG());
+                }
             }
+            else { _timerG = 0f; }
         }
-        else { _timerG = 0f; }
         if (timerSliderG != null) timerSliderG.value = Mathf.Clamp01(_timerG / requiredDuration);
 
         // --- 赤色の判定（小声） ---
-        if (thresholdG >= _currentVolume && _currentVolume > thresholdR)
+        if (currentCoroutineR == null)
         {
-            _timerR += Time.deltaTime;
-            if (_timerR >= requiredDuration)
+            if (thresholdG >= _currentVolume && _currentVolume > thresholdR)
             {
-                stageRoot.enableGround("RedGround");
-                _timerR = 0f;
+                _timerR += Time.deltaTime;
+                if (_timerR >= requiredDuration)
+                {
+                    stageRoot.enableGround("RedGround");
+                    currentCoroutineR = StartCoroutine(WaitCoroutineR());
+                }
             }
+            else { _timerR = 0f; }
         }
-        else { _timerR = 0f; }
         if (timerSliderR != null) timerSliderR.value = Mathf.Clamp01(_timerR / requiredDuration);
+    }
+    IEnumerator WaitCoroutineR()
+    {
+        float elapsed = 0;
+        while (elapsed < stageRoot.GetComponent<StageRoot>().mainDuration)
+        {
+            if (!StageRoot.isTimePaused)
+            {
+                elapsed += Time.deltaTime;
+            }
+            yield return null;
+        }
+        currentCoroutineR = null;
+        _timerR = 0;
+    }
+    IEnumerator WaitCoroutineG()
+    {
+        float elapsed = 0;
+        while (elapsed < stageRoot.GetComponent<StageRoot>().mainDuration)
+        {
+            if (!StageRoot.isTimePaused)
+            {
+                elapsed += Time.deltaTime;
+            }
+            yield return null;
+        }
+        currentCoroutineG = null;
+        _timerG = 0;
+    }
+    IEnumerator WaitCoroutineB()
+    {
+        float elapsed = 0;
+        while (elapsed < stageRoot.GetComponent<StageRoot>().mainDuration)
+        {
+            if (!StageRoot.isTimePaused)
+            {
+                elapsed += Time.deltaTime;
+            }
+            yield return null;
+        }
+        currentCoroutineB = null;
+        _timerB = 0;
     }
 }

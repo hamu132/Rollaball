@@ -8,9 +8,9 @@ public class ChangeGroundType : MonoBehaviour
     [SerializeField] private AnimationCurve periodCurve;
     private Coroutine currentCoroutine;
     GameObject stageRoot;
-    public static bool isTimePaused = false;
     private Renderer targetRenderer;
     private MaterialPropertyBlock propBlock;
+    private float mainDuration;
     void Start()
     {
         targetRenderer = GetComponent<Renderer>();
@@ -21,6 +21,7 @@ public class ChangeGroundType : MonoBehaviour
         //親スクリプトにリストとして追加
         stageRoot = transform.parent.parent.parent.gameObject;
         stageRoot.GetComponent<StageRoot>().addList(gameObject);
+        mainDuration = stageRoot.GetComponent<StageRoot>().mainDuration;
 
     }
     // 初期値を反映するためのメソッド（コルーチン外でも使うため分離）
@@ -51,10 +52,11 @@ public class ChangeGroundType : MonoBehaviour
     {
         bool colliderFlag = true;
         GetComponent<Collider>().enabled = true;
-        float totalDuration = 5.0f;         // 5秒間
+        
         float outroDuration = 0.5f;//最後
         float introDuration = 0.3f;//最初
-        float outroStartTime = totalDuration - outroDuration; // 4.5秒時点
+        float outroStartTime = mainDuration; // 4.5秒時点
+        float totalDuration = outroStartTime + outroDuration;         // 5秒間
         float elapsed = 0f;
         float phase = 0f;
 
@@ -62,7 +64,7 @@ public class ChangeGroundType : MonoBehaviour
         while (elapsed < totalDuration)
         {
             
-            if (!isTimePaused)
+            if (!StageRoot.isTimePaused)
             {
                 elapsed += Time.deltaTime;
                 // 現在のPropertyBlockの状態を取得

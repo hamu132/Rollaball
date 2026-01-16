@@ -47,7 +47,7 @@ public class GameDirector : MonoBehaviour
         // 1. プレイヤーの操作を無効にする・足場の時間を止める
         playerInput.DeactivateInput(); 
         playerController.ZeroVelocity();
-        ChangeGroundType.isTimePaused = true;
+        StageRoot.isTimePaused = true;
 
 
         // 1. 開始時の位置と回転を記録
@@ -105,6 +105,6 @@ public class GameDirector : MonoBehaviour
         // 6. プレイヤーの操作を有効に戻す
         playerInput.ActivateInput();
         cameraController.isCameraActive = true;
-        ChangeGroundType.isTimePaused = false;
+        StageRoot.isTimePaused = false;
     }
 }
