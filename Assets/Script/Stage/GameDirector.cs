@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using System; // InputActionを使うため
 using TMPro;
 //ステージルートにアタッチ
+//ゴールした時にカメラを動かし、時間を止める
 public class GameDirector : MonoBehaviour
 {
     [Header("参照設定")]

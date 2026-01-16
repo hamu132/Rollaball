@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 //ステージのルートオブジェクトにアタッチ
+// 特定の色の床を一括でONにする
 public class StageRoot : MonoBehaviour
 {
     private List<GameObject> groundObject = new List<GameObject>();

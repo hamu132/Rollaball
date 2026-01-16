@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 //アイテムオブジェクトにアタッチ
+//アイテムを回転させる
 public class Rotator : MonoBehaviour
 {
 

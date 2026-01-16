@@ -1,91 +1,120 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using TMPro;
 using UnityEngine.UI;
-//Micオブジェクトにアタッチ
+
 [RequireComponent(typeof(AudioSource))]
 public class MicInput : MonoBehaviour
 {
     private AudioSource _audioSource;
     private string _micName;
+
+
+    
+    [Header("UI設定")]
     public TextMeshProUGUI countText;
-    public StageRoot groundParent;
     public Slider slider;
+    public StageRoot stageRoot;
 
-    void micSetup()
-    {
-        _audioSource = GetComponent<AudioSource>();
+    [Header("音量感度設定")]
+    [Range(0.01f, 10.0f)] public float sensitivity = 1.0f;
+    [Range(0f, 1f)] public float thresholdR = 0.2f;
+    [Range(0f, 1f)] public float thresholdG = 0.5f;
+    [Range(0f, 1f)] public float thresholdB = 0.8f;
+    [SerializeField] private Slider timerSliderR;
+    [SerializeField] private Slider timerSliderG;
+    [SerializeField] private Slider timerSliderB;
+    [Header("溜め時間設定")]
+    public float requiredDuration = 0.5f; // 必要な継続時間
+    
+    // それぞれの色の溜め時間を計測するカウンター
+    private float _timerR = 0f;
+    private float _timerG = 0f;
+    private float _timerB = 0f;
 
-        // 利用可能なマイクを探す
-        if (Microphone.devices.Length > 0)
-        {
-            _micName = Microphone.devices[0];
-            // 録音開始（ループ設定、1秒間のバッファ、マイクのサンプリングレート）
-            _audioSource.clip = Microphone.Start(_micName, true, 1, AudioSettings.outputSampleRate);
-            _audioSource.loop = true;
-            
-            // 録音が始まるまで待機
-            while (!(Microphone.GetPosition(_micName) > 0)) { }
-            _audioSource.Play();
-            Debug.Log("マイク録音開始: " + _micName);
-        }
-        else
-        {
-            Debug.Log("マイクが接続されていません");
-        }        
-    }
+    private float _currentVolume = 0;
+    private const int SAMPLE_COUNT = 1024;
+
     void Start()
     {
         micSetup();
     }
 
-    void Update()
+    void micSetup()
     {
-        float[] spectrum = new float[1024]; // 2の累乗である必要があります
-        _audioSource.GetSpectrumData(spectrum, 0, FFTWindow.BlackmanHarris);
-
-        float maxV = 0;
-        int maxIndex = 0;
-
-        // 一番強度が強いビン（周波数の箱）を探す
-        for (int i = 0; i < spectrum.Length; i++)
+        _audioSource = GetComponent<AudioSource>();
+        if (Microphone.devices.Length > 0)
         {
-            if (spectrum[i] > maxV)
-            {
-                maxV = spectrum[i];
-                maxIndex = i;
-            }
-        }
-
-        // インデックスを実際の周波数(Hz)に変換
-        float freq = maxIndex * AudioSettings.outputSampleRate / 2 / spectrum.Length;
-        
-        if (maxV < 0.001f) // 一定以上の音量がある時だけ
-        {
-            freq = 0;
-        }
-        countText.text = $"volume: {maxV} \nfreq:{freq}";
-        freq = Mathf.Clamp(freq,0f,1500f);
-        slider.value = freq/1500f;
-        if(freq > 1200)
-        {
-            //何もしない
-        }
-        else if(freq > 100)
-        {
-            groundParent.enableGround("RedGround");
-        }
-        else if(freq > 600)
-        {
-            groundParent.enableGround("BlueGround");
-        }
-        else if(freq > 300)
-        {
-            groundParent.enableGround("GreenGround");
+            _micName = Microphone.devices[0];
+            _audioSource.clip = Microphone.Start(_micName, true, 1, AudioSettings.outputSampleRate);
+            _audioSource.loop = true;
+            while (!(Microphone.GetPosition(_micName) > 0)) { }
+            _audioSource.Play();
         }
         else
         {
-            //何もしない
+            Debug.LogError("マイクが接続されていません");
         }
+    }
+
+    void Update()
+    {
+        // 1. 波形データの取得と音量(RMS)計算
+        float[] samples = new float[SAMPLE_COUNT];
+        _audioSource.GetOutputData(samples, 0);
+        float sum = 0;
+        for (int i = 0; i < samples.Length; i++)
+        {
+            sum += samples[i] * samples[i];
+        }
+        float rms = Mathf.Sqrt(sum / SAMPLE_COUNT);
+
+        // 2. 滑らかな音量の更新
+        float targetVolume = rms * sensitivity;
+        _currentVolume = Mathf.Lerp(_currentVolume, targetVolume, Time.deltaTime * 15f);
+
+        // 3. UI更新
+        countText.text = $"Volume: {_currentVolume:F4}\nTimerR: {_timerR:F1}\nTimerG: {_timerG:F1}\nTimerB: {_timerB:F1}";
+        slider.value = Mathf.Clamp01(_currentVolume);
+
+        // 4. 床の出現判定（溜め時間のロジック）
+        
+        // --- 青色の判定（大声） ---
+        if (_currentVolume > thresholdB)
+        {
+            _timerB += Time.deltaTime;
+            if (_timerB >= requiredDuration)
+            {
+                stageRoot.enableGround("BlueGround");
+                _timerB = 0f; // 発動したらタイマーをリセット
+            }
+        }
+        else { _timerB = 0f; } // しきい値を下回ったら即座にリセット
+        if (timerSliderB != null) timerSliderB.value = Mathf.Clamp01(_timerB / requiredDuration);
+
+        // --- 緑色の判定（中声） ---
+        if (thresholdB >= _currentVolume && _currentVolume > thresholdG)
+        {
+            _timerG += Time.deltaTime;
+            if (_timerG >= requiredDuration)
+            {
+                stageRoot.enableGround("GreenGround");
+                _timerG = 0f;
+            }
+        }
+        else { _timerG = 0f; }
+        if (timerSliderG != null) timerSliderG.value = Mathf.Clamp01(_timerG / requiredDuration);
+
+        // --- 赤色の判定（小声） ---
+        if (thresholdG >= _currentVolume && _currentVolume > thresholdR)
+        {
+            _timerR += Time.deltaTime;
+            if (_timerR >= requiredDuration)
+            {
+                stageRoot.enableGround("RedGround");
+                _timerR = 0f;
+            }
+        }
+        else { _timerR = 0f; }
+        if (timerSliderR != null) timerSliderR.value = Mathf.Clamp01(_timerR / requiredDuration);
     }
 }

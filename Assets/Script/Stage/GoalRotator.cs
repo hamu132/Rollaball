@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 //ゴールオブジェクトにアタッチ
+//ゴールした時にゴールオブジェクトを出現させる
 public class GoalRotator : MonoBehaviour
 {
     [SerializeField] private float duration = 1.5f;
