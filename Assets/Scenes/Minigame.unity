@@ -4954,13 +4954,14 @@ MonoBehaviour:
   slider: {fileID: 165307192}
   stageRoot: {fileID: 1472036301}
   sensitivity: 30
-  thresholdR: 0.1
-  thresholdG: 0.358
-  thresholdB: 0.606
+  thresholdR: 0.09
+  thresholdG: 0.33
+  thresholdB: 0.6
   timerSliderR: {fileID: 968492448}
   timerSliderG: {fileID: 1868506269}
   timerSliderB: {fileID: 2015251680}
   requiredDuration: 1
+  test: 0
 --- !u!82 &1852329887
 AudioSource:
   m_ObjectHideFlags: 0

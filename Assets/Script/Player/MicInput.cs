@@ -37,6 +37,8 @@ public class MicInput : MonoBehaviour
     private Coroutine currentCoroutineR;
     private Coroutine currentCoroutineG;
     private Coroutine currentCoroutineB;
+    private bool _micMode;
+    private float returnSpeed = 5f;
 
     void Start()
     {
@@ -53,28 +55,38 @@ public class MicInput : MonoBehaviour
             _audioSource.loop = true;
             while (!(Microphone.GetPosition(_micName) > 0)) { }
             _audioSource.Play();
+            _micMode = true;
         }
         else
         {
+            _micMode = false;
             Debug.LogError("マイクが接続されていません");
         }
     }
 
     void Update()
     {
-        // 1. 波形データの取得と音量(RMS)計算
-        float[] samples = new float[SAMPLE_COUNT];
-        _audioSource.GetOutputData(samples, 0);
-        float sum = 0;
-        for (int i = 0; i < samples.Length; i++)
+        if (PlayerController.timerf == 0 && _micMode)
         {
-            sum += samples[i] * samples[i];
-        }
-        float rms = Mathf.Sqrt(sum / SAMPLE_COUNT);
+            // 1. 波形データの取得と音量(RMS)計算
+            float[] samples = new float[SAMPLE_COUNT];
+            _audioSource.GetOutputData(samples, 0);
+            float sum = 0;
+            for (int i = 0; i < samples.Length; i++)
+            {
+                sum += samples[i] * samples[i];
+            }
+            float rms = Mathf.Sqrt(sum / SAMPLE_COUNT);
 
-        // 2. 滑らかな音量の更新
-        float targetVolume = rms * sensitivity;
-        _currentVolume = Mathf.Lerp(_currentVolume, targetVolume, Time.deltaTime * 15f);
+            // 2. 滑らかな音量の更新
+            float targetVolume = rms * sensitivity;
+            _currentVolume = Mathf.Lerp(_currentVolume, targetVolume, Time.deltaTime * 15f);
+        }
+        else
+        {
+            float targetVolume = PlayerController.timerf;
+            _currentVolume = Mathf.Lerp(_currentVolume, targetVolume, Time.deltaTime * 15f);
+        }
 
         // 3. UI更新
         countText.text = $"Volume: {_currentVolume:F4}\nTimerR: {_timerR:F1}\nTimerG: {_timerG:F1}\nTimerB: {_timerB:F1}";
@@ -140,6 +152,11 @@ public class MicInput : MonoBehaviour
             }
             yield return null;
         }
+        while (_timerR > 0)
+        {
+            _timerR -= returnSpeed * Time.deltaTime;
+            yield return null;
+        }
         currentCoroutineR = null;
         _timerR = 0;
     }
@@ -154,6 +171,11 @@ public class MicInput : MonoBehaviour
             }
             yield return null;
         }
+        while (_timerG > 0)
+        {
+            _timerG -= returnSpeed * Time.deltaTime;
+            yield return null;
+        }
         currentCoroutineG = null;
         _timerG = 0;
     }
@@ -166,6 +188,12 @@ public class MicInput : MonoBehaviour
             {
                 elapsed += Time.deltaTime;
             }
+            yield return null;
+        }
+        
+        while (_timerB > 0)
+        {
+            _timerB -= returnSpeed * Time.deltaTime;
             yield return null;
         }
         currentCoroutineB = null;

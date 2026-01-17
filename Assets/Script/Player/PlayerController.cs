@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
     private StageRoot stageRoot;
     private GameDirector gameDirector;
     private PlayerInput playerInput;
+    public static float timerf;
+
     // Start is called before the first frame update
     public void ZeroVelocity()
     {
@@ -70,21 +72,35 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed)
         {
-            stageRoot.enableGround("RedGround");
+            //_timerRf = true;
+            //stageRoot.enableGround("RedGround");
+            timerf = 0.21f;
+        }
+        if (context.canceled && timerf == 0.21f)
+        {
+            timerf = 0;
         }
     }
     public void OnFloor2(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            stageRoot.enableGround("GreenGround");
+            timerf = 0.46f;
+        }
+        if (context.canceled && timerf == 0.46f)
+        {
+            timerf = 0;
         }
     }
     public void OnFloor3(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            stageRoot.enableGround("BlueGround");
+            timerf = 0.78f;
+        }
+        if (context.canceled && timerf == 0.78f)
+        {
+            timerf = 0;
         }
     }
     public void OnMove(InputAction.CallbackContext context)
