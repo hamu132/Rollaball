@@ -3351,11 +3351,11 @@ RectTransform:
   - {fileID: 373450056}
   m_Father: {fileID: 1064755661}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -608.9, y: -437.7}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 135.7, y: 89.54001}
   m_SizeDelta: {x: 460.4, y: 20}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &948589169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3403,7 +3403,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.83
+  m_Value: 0.67
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3923,7 +3923,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -4490,11 +4490,11 @@ RectTransform:
   - {fileID: 1291558177}
   m_Father: {fileID: 1064755661}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -322.2, y: -468.7}
-  m_SizeDelta: {x: 123.58, y: 20}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 607, y: 59.14}
+  m_SizeDelta: {x: 123.58002, y: 20}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &1255265765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5884,11 +5884,11 @@ RectTransform:
   - {fileID: 662326330}
   m_Father: {fileID: 1064755661}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -106.8, y: -444.63}
-  m_SizeDelta: {x: 94.1, y: 30}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 808.1, y: 80.7}
+  m_SizeDelta: {x: 94.099976, y: 30}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &1801075926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6135,9 +6135,9 @@ MonoBehaviour:
   slider: {fileID: 948589169}
   stageRoot: {fileID: 1472036301}
   sensitivity: 30
-  thresholdR: 0.18
-  thresholdG: 0.45
-  thresholdB: 0.7
+  thresholdR: 0.14
+  thresholdG: 0.41
+  thresholdB: 0.67
   timerSliderR: {fileID: 968492448}
   timerSliderG: {fileID: 1868506269}
   timerSliderB: {fileID: 2015251680}
