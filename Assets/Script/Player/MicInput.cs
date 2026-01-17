@@ -89,7 +89,7 @@ public class MicInput : MonoBehaviour
         }
 
         // 3. UI更新
-        countText.text = $"Volume: {_currentVolume:F4}\nTimerR: {_timerR:F1}\nTimerG: {_timerG:F1}\nTimerB: {_timerB:F1}";
+        countText.text = $"Volume: {_currentVolume:F4}";
         slider.value = Mathf.Clamp01(_currentVolume);
 
         // 4. 床の出現判定（溜め時間のロジック）

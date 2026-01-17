@@ -64,8 +64,14 @@ public class SceneTransitionManager : MonoBehaviour
         // 少しウェイトを入れると余韻が出ます
         yield return new WaitForSeconds(0.5f); 
         
-        // 次のシーンを再読み込み
-        SceneManager.LoadScene(str);
+        if (str == "End")
+        {
+            Application.Quit();
+        }
+        else
+        {
+            SceneManager.LoadScene(str);        
+        }
 
         // シーン読み込み完了待ち（最低1フレーム待つ）
         //yield return null;

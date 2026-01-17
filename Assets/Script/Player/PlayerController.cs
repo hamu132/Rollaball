@@ -74,9 +74,9 @@ public class PlayerController : MonoBehaviour
         {
             //_timerRf = true;
             //stageRoot.enableGround("RedGround");
-            timerf = 0.21f;
+            timerf = 0.31f;
         }
-        if (context.canceled && timerf == 0.21f)
+        if (context.canceled && timerf == 0.31f)
         {
             timerf = 0;
         }
@@ -85,9 +85,9 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed)
         {
-            timerf = 0.46f;
+            timerf = 0.57f;
         }
-        if (context.canceled && timerf == 0.46f)
+        if (context.canceled && timerf == 0.57f)
         {
             timerf = 0;
         }
@@ -96,9 +96,9 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed)
         {
-            timerf = 0.78f;
+            timerf = 0.83f;
         }
-        if (context.canceled && timerf == 0.78f)
+        if (context.canceled && timerf == 0.83f)
         {
             timerf = 0;
         }

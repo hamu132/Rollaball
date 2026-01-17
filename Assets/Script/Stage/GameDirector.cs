@@ -116,7 +116,7 @@ public class GameDirector : MonoBehaviour
     [SerializeField] private float barTargetHeight = 100f; // 黒枠の最終的な高さ
 
     [SerializeField] private RectTransform resultPanel;
-    private float _blackTime = 1;
+    private float _blackTime = 0.5f;
     private float _goalDisplayTime = 0.3f;
     public void GoalProcess()
     {
