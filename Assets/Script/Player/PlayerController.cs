@@ -171,7 +171,9 @@ public class PlayerController : MonoBehaviour
                 other.enabled = false;
                 ZeroVelocity();
                 playerInput.DeactivateInput(); 
-                SceneTransitionManager.instance.IrisOust("End");
+                //SceneTransitionManager.instance.IrisOust("End");
+                gameDirector.GoalProcess();
+
             }
         }
     }
