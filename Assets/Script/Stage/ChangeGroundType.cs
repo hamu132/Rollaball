@@ -98,7 +98,7 @@ public class ChangeGroundType : MonoBehaviour
                 //イントロかつメイン
                 if (elapsed <= outroStartTime)
                 {
-                    float emission = Mathf.Lerp(3.0f, 0.0f, periodCurveValue);
+                    float emission = Mathf.Lerp(1.0f, 0.2f, periodCurveValue);
                     propBlock.SetFloat("_EmissionIntensity", emission);
                 }
                 //アウトロ
