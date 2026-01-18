@@ -5553,8 +5553,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 847495240}
-  offset: {x: 0, y: 0, z: 0}
+  gameDirector: {fileID: 1472036302}
   isCameraActive: 0
+  cameraTransitionTime: 1
+  targetDistance: 10
 --- !u!1 &968492446
 GameObject:
   m_ObjectHideFlags: 0
@@ -7829,7 +7831,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 982a121128605a14bbc4d4354a838f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainDuration: 4.5
 --- !u!114 &1472036302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7844,14 +7845,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 847495240}
   mainCamera: {fileID: 961739752}
+  goal: {fileID: 0}
   countText: {fileID: 1348941665}
-  cameraTransitionTime: 1
-  targetDistance: 10
-  currentStage: 3
+  currentStage: 2
   topBar: {fileID: 1175882190}
   bottomBar: {fileID: 1364006103}
   barTargetHeight: 160
   resultPanel: {fileID: 910682272}
+  goalDisplayTime: 0.3
 --- !u!4 &1478131561 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8864544161661359310, guid: c7ff65777ce2e834280d2b2061e0ecfd,
@@ -10877,7 +10878,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 982a121128605a14bbc4d4354a838f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainDuration: 4.5
 --- !u!1 &2085044656
 GameObject:
   m_ObjectHideFlags: 0

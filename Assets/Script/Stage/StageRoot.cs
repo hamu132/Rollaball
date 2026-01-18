@@ -8,6 +8,7 @@ public class StageRoot : MonoBehaviour
     //固定の変数を設定
     public static float mainDuration = 4.5f;//床の生成時間
     public static bool isTimePaused = false;//時間を進めるかどうか
+    public static bool isClear = false;
 
     public void enableGround(string tag = "Ground")
     {

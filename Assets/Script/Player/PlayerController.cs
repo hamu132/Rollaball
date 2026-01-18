@@ -152,9 +152,8 @@ public class PlayerController : MonoBehaviour
             if (SceneTransitionManager.instance != null)
             {
                 other.enabled = false;
-                ZeroVelocity();
-                playerInput.DeactivateInput(); 
                 gameDirector.GoalProcess();
+                StageRoot.isClear = true;
             }
         }
     }
