@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip move;
     [SerializeField] private AudioClip item;
     [SerializeField] private GameObject stageRootObject;
-    private StageRoot stageRoot;
     private GameDirector gameDirector;
     private PlayerInput playerInput;
     public static float timerf;
@@ -39,7 +38,6 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         playerInput = GetComponent<PlayerInput>();
-        stageRoot = stageRootObject.GetComponent<StageRoot>();
         gameDirector = stageRootObject.GetComponent<GameDirector>();
         count = 0;
         rb = GetComponent<Rigidbody>();
@@ -50,6 +48,10 @@ public class PlayerController : MonoBehaviour
         else if (gameDirector.currentStage == 2)
         {
             transform.position = new Vector3(0,34,-7);
+        }
+        else if (gameDirector.currentStage == 3)
+        {
+            transform.position = new Vector3(0,91,-17.5f);
         }
     }
     private void FixedUpdate()
@@ -64,7 +66,8 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            rb.velocity *= 0.9f;
+            Vector3 v = new Vector3(rb.velocity.x*0.5f,rb.velocity.y,rb.velocity.z*0.5f);
+            rb.velocity =v;
         }
     }
     //キーボード入力で床を制御
