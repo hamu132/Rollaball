@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+//ボタンオブジェクトにアタッチ
 public class MenuButton : MonoBehaviour
 {
     [SerializeField] private string targetSceneName = "Title";

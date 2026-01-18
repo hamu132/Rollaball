@@ -144,7 +144,7 @@ public class MicInput : MonoBehaviour
     IEnumerator WaitCoroutineR()
     {
         float elapsed = 0;
-        while (elapsed < stageRoot.GetComponent<StageRoot>().mainDuration)
+        while (elapsed < StageRoot.mainDuration)
         {
             if (!StageRoot.isTimePaused)
             {
@@ -163,7 +163,7 @@ public class MicInput : MonoBehaviour
     IEnumerator WaitCoroutineG()
     {
         float elapsed = 0;
-        while (elapsed < stageRoot.GetComponent<StageRoot>().mainDuration)
+        while (elapsed < StageRoot.mainDuration)
         {
             if (!StageRoot.isTimePaused)
             {
@@ -182,7 +182,7 @@ public class MicInput : MonoBehaviour
     IEnumerator WaitCoroutineB()
     {
         float elapsed = 0;
-        while (elapsed < stageRoot.GetComponent<StageRoot>().mainDuration)
+        while (elapsed < StageRoot.mainDuration)
         {
             if (!StageRoot.isTimePaused)
             {

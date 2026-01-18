@@ -3,11 +3,10 @@ using System.Collections;
 //RedGroundプレハブにアタッチ
 public class ChangeGroundType : MonoBehaviour
 {
-    //[SerializeField] private Material groundMaterial;
     [SerializeField] private AnimationCurve introCurve; // インスペクターでグラフを設定
     [SerializeField] private AnimationCurve periodCurve;
     private Coroutine currentCoroutine;
-    GameObject stageRoot;
+    private GameObject stageRoot;
     private Renderer targetRenderer;
     private MaterialPropertyBlock propBlock;
     private float mainDuration;
@@ -21,8 +20,7 @@ public class ChangeGroundType : MonoBehaviour
         //親スクリプトにリストとして追加
         stageRoot = transform.parent.parent.parent.gameObject;
         stageRoot.GetComponent<StageRoot>().addList(gameObject);
-        mainDuration = stageRoot.GetComponent<StageRoot>().mainDuration;
-
+        mainDuration = StageRoot.mainDuration;
     }
     // 初期値を反映するためのメソッド（コルーチン外でも使うため分離）
     void ApplyInitialProperties()

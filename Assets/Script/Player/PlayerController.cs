@@ -73,38 +73,18 @@ public class PlayerController : MonoBehaviour
     //キーボード入力で床を制御
     public void OnFloor1(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            //_timerRf = true;
-            //stageRoot.enableGround("RedGround");
-            timerf = 0.31f;
-        }
-        if (context.canceled && timerf == 0.31f)
-        {
-            timerf = 0;
-        }
+        if (context.performed)timerf = 0.31f;
+        if (context.canceled && timerf == 0.31f)timerf = 0;
     }
     public void OnFloor2(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            timerf = 0.57f;
-        }
-        if (context.canceled && timerf == 0.57f)
-        {
-            timerf = 0;
-        }
+        if (context.performed)timerf = 0.57f;
+        if (context.canceled && timerf == 0.57f)timerf = 0;
     }
     public void OnFloor3(InputAction.CallbackContext context)
     {
-        if (context.performed)
-        {
-            timerf = 0.83f;
-        }
-        if (context.canceled && timerf == 0.83f)
-        {
-            timerf = 0;
-        }
+        if (context.performed)timerf = 0.83f;
+        if (context.canceled && timerf == 0.83f)timerf = 0;
     }
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -174,9 +154,7 @@ public class PlayerController : MonoBehaviour
                 other.enabled = false;
                 ZeroVelocity();
                 playerInput.DeactivateInput(); 
-                //SceneTransitionManager.instance.IrisOust("End");
                 gameDirector.GoalProcess();
-
             }
         }
     }

@@ -11,7 +11,6 @@ public class GoalRotator : MonoBehaviour
     [SerializeField] private float rotationSpeed = 720f;
     [SerializeField] private AnimationCurve landingCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
     private Vector3 targetPosition;
-    private Quaternion targetRotation;
 
     private bool initialized = true;
     //出現時、ちょっと演出を加えながら出現
@@ -19,7 +18,6 @@ public class GoalRotator : MonoBehaviour
     {
         // ゴールが置かれている「本来の位置と回転」を保存しておく
         targetPosition = transform.position;
-        targetRotation = transform.rotation;
     }
     void OnEnable()
     {
