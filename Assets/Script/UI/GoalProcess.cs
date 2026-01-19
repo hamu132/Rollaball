@@ -36,7 +36,7 @@ public class GoalProcess : MonoBehaviour
             topBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, currentHeight);
             bottomBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, currentHeight);
 
-            GameDirector.instance.splineAnimate.Play();
+            //GameDirector.instance.splineAnimate.Play();
             
             yield return null;
         }
