@@ -492,7 +492,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   topBar: {fileID: 1175882190}
   bottomBar: {fileID: 1364006103}
-  barTargetHeight: 100
+  barTargetHeight: 150
   resultPanel: {fileID: 910682272}
 --- !u!1001 &87073232
 PrefabInstance:

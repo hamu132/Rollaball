@@ -21,6 +21,7 @@ public class GoalRotator : MonoBehaviour
     }
     void OnEnable()
     {
+        Debug.Log(initialized);
         //最初は何もしない
         if (initialized)
         {
