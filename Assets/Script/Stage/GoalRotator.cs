@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 //ゴールオブジェクトにアタッチ
@@ -11,26 +12,12 @@ public class GoalRotator : MonoBehaviour
     [SerializeField] private float rotationSpeed = 720f;
     [SerializeField] private AnimationCurve landingCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
     private Vector3 targetPosition;
-
-    private bool initialized = true;
+    private bool initialized;
     //出現時、ちょっと演出を加えながら出現
     void Awake()
     {
         // ゴールが置かれている「本来の位置と回転」を保存しておく
         targetPosition = transform.position;
-    }
-    void OnEnable()
-    {
-        Debug.Log(initialized);
-        //最初は何もしない
-        if (initialized)
-        {
-            initialized = false;
-        }
-        else
-        {
-            StartCoroutine(AnimateGoalAppearance());
-        }
     }
     // Update is called once per frame
     void Update()
@@ -39,6 +26,10 @@ public class GoalRotator : MonoBehaviour
         {
             transform.Rotate(Vector3.up, 0.5f * rotationSpeed * Time.deltaTime);
         }
+    }
+    public void OnEnable()
+    {
+        StartCoroutine(AnimateGoalAppearance());
     }
     IEnumerator AnimateGoalAppearance()
     {
@@ -68,15 +59,6 @@ public class GoalRotator : MonoBehaviour
 
         // 4. 最後にピタッと定位置に合わせる
         transform.position = targetPosition;
-        //transform.rotation = targetRotation;
-
-        // ここで「着地完了！」のパーティクルや音を鳴らすと最高です
-        PlayLandingEffect();
-    }
-
-    void PlayLandingEffect()
-    {
         initialized = true;
-        // ここにエフェクトなどの処理を書く
     }
 }
