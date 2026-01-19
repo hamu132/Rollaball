@@ -5449,7 +5449,7 @@ MonoBehaviour:
   player: {fileID: 847495240}
   isCameraActive: 0
   cameraTransitionTime: 1
-  targetDistance: 10
+  targetDistance: 8
 --- !u!1 &968492446
 GameObject:
   m_ObjectHideFlags: 0
@@ -10869,6 +10869,7 @@ MonoBehaviour:
   itemNum: 0
   isClear: 0
   isTimePaused: 0
+  currentItemCount: 0
 --- !u!4 &2056106868
 Transform:
   m_ObjectHideFlags: 0
