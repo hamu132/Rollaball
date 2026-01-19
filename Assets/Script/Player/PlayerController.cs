@@ -138,12 +138,9 @@ public class PlayerController : MonoBehaviour
         //ゴール到達
         else if (other.gameObject.CompareTag("Goal"))
         {
-            if (SceneTransitionManager.instance != null)
-            {
-                other.enabled = false;
-                UIDirector.instance.goalProcess.Goal();
-                GameDirector.instance.isClear = true;
-            }
+            other.enabled = false;
+            UIDirector.instance.goalProcess.Goal();
+            GameDirector.instance.isClear = true;
         }
     }
     void Explode()

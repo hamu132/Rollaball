@@ -10860,7 +10860,7 @@ MonoBehaviour:
   mainCamera: {fileID: 961739752}
   stageRoot: {fileID: 1472036299}
   goalDisplayTime: 0.3
-  currentStage: 2
+  currentStage: 3
   playerInput: {fileID: 0}
   playerController: {fileID: 0}
   cameraController: {fileID: 0}
