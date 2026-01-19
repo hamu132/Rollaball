@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject stageRootObject;
     public static float timerf;
 
+
+
     // Start is called before the first frame update
     public void ZeroVelocity()
     {
@@ -139,10 +141,12 @@ public class PlayerController : MonoBehaviour
         else if (other.gameObject.CompareTag("Goal"))
         {
             other.enabled = false;
+            GameDirector.instance.SetSpline();
             UIDirector.instance.goalProcess.Goal();
             GameDirector.instance.isClear = true;
         }
     }
+
     void Explode()
     {
         AudioManager.instance.PlaySE(gameOver,0.2f);

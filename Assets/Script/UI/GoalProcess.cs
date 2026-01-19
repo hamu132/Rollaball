@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.Splines; // 必須
 
 //黒いシネマティック演出・ゴール用UI演出
 //アタッチ
@@ -10,13 +11,14 @@ public class GoalProcess : MonoBehaviour
     [SerializeField] private RectTransform topBar;
     [SerializeField] private RectTransform bottomBar;
     [SerializeField] private float barTargetHeight = 100f; // 黒枠の最終的な高さ
-
     [SerializeField] private RectTransform resultPanel;
+    [Header("ベジェ曲線")]
     private float _blackTime = 0.5f;
     public void Goal()
     {
         topBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
         bottomBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
+        GameDirector.instance.SetSpline();
         StartCoroutine(GoalProcessRoutine());
     }
     IEnumerator GoalProcessRoutine()
@@ -33,6 +35,8 @@ public class GoalProcess : MonoBehaviour
             // 上下の高さを更新
             topBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, currentHeight);
             bottomBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, currentHeight);
+
+            GameDirector.instance.splineAnimate.Play();
             
             yield return null;
         }

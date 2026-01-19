@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using System; // InputActionを使うため
 using TMPro;
 using UnityEngine.TextCore.Text;
+using UnityEngine.Splines;
 //ステージルートにアタッチ
 //重要変数格納場所
 public class GameDirector : MonoBehaviour
@@ -24,11 +25,13 @@ public class GameDirector : MonoBehaviour
     public GameObject player;//プレイヤー
     public Camera mainCamera;          // メインカメラ
     public GameObject stageRoot;      // ステージのルートオブジェクト
+    public SplineController splineController;
     [Header("数値変数設定")]
     public float goalDisplayTime = 0.3f;
     public int currentStage = 1;
     [Header("初期化で取得するのでD&D不要(途中変更なし)")]
     public PlayerInput playerInput;    // プレイヤーのInputAction
+    public SplineAnimate splineAnimate;
     public PlayerController playerController;
     public CameraController cameraController;
     public Transform currentStageTransform;
@@ -41,6 +44,7 @@ public class GameDirector : MonoBehaviour
     void Initialize()
     {
         playerInput = player.GetComponent<PlayerInput>();
+        splineAnimate = player.GetComponent<SplineAnimate>();
         playerController = player.GetComponent<PlayerController>();
         cameraController = mainCamera.GetComponent<CameraController>();
         currentStageTransform = stageRoot.transform.Find($"Stage{currentStage}");//ステージ
@@ -48,6 +52,7 @@ public class GameDirector : MonoBehaviour
         itemNum = currentStageTransform.Find("PickUpParent").childCount;//アイテムの総数
         goal.SetActive(false);
         StartTime();
+        
     }
 
     public void StopTime()
@@ -66,5 +71,19 @@ public class GameDirector : MonoBehaviour
     {
         currentItemCount++;
         if (currentItemCount == itemNum) cameraController.LookAtGoal();
+    }
+    public void SetSpline()
+    {
+        Vector3 playerPosition = player.transform.position;
+        Vector3 goalPosition = goal.transform.position;
+        goalPosition.y += 2f;
+        Vector3 middlePosition = playerPosition;
+        middlePosition.y += 3f;
+        // splineController.SetKnotWorldPosition(0,playerPosition);
+        // splineController.SetKnotWorldPosition(1,middlePosition);
+        // splineController.SetKnotWorldPosition(2,goalPosition);
+        splineController.SetKnotWorldPosition(0,playerPosition);
+        splineController.SetKnotWorldPosition(1,middlePosition);
+        splineController.SetKnotWorldPosition(2,goalPosition);
     }
 }
