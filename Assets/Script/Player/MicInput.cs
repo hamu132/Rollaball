@@ -12,7 +12,6 @@ public class MicInput : MonoBehaviour
 
     
     [Header("UI設定")]
-    public TextMeshProUGUI countText;
     public Slider slider;
     public Slider sensitivitySlider;
     public StageRoot stageRoot;
@@ -91,7 +90,8 @@ public class MicInput : MonoBehaviour
         }
 
         // 3. UI更新
-        countText.text = $"Volume: {_currentVolume:F4}";
+        //countText.text = $"Volume: {_currentVolume:F4}";
+        UIDirector.instance.updateText.SetMicVol(_currentVolume);
         slider.value = Mathf.Clamp01(_currentVolume);
 
         // 4. 床の出現判定（溜め時間のロジック）
@@ -148,7 +148,7 @@ public class MicInput : MonoBehaviour
         float elapsed = 0;
         while (elapsed < StageRoot.mainDuration)
         {
-            if (!StageRoot.isTimePaused)
+            if (!GameDirector.instance.isTimePaused)
             {
                 elapsed += Time.deltaTime;
             }
@@ -167,7 +167,7 @@ public class MicInput : MonoBehaviour
         float elapsed = 0;
         while (elapsed < StageRoot.mainDuration)
         {
-            if (!StageRoot.isTimePaused)
+            if (!GameDirector.instance.isTimePaused)
             {
                 elapsed += Time.deltaTime;
             }
@@ -186,7 +186,7 @@ public class MicInput : MonoBehaviour
         float elapsed = 0;
         while (elapsed < StageRoot.mainDuration)
         {
-            if (!StageRoot.isTimePaused)
+            if (!GameDirector.instance.isTimePaused)
             {
                 elapsed += Time.deltaTime;
             }

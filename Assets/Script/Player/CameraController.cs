@@ -6,7 +6,6 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public GameObject player;
-    public GameDirector gameDirector;
     private Vector3 offset;
     public bool isCameraActive;
 
@@ -38,7 +37,7 @@ public class CameraController : MonoBehaviour
     IEnumerator GoalCutsceneRoutine()
     {
         // 1. プレイヤーの操作を無効にする・足場の時間を止める
-        gameDirector.StopTime();
+        GameDirector.instance.StopTime();
         
 
         // 1. 開始時の位置と回転を記録
@@ -46,7 +45,7 @@ public class CameraController : MonoBehaviour
         Quaternion startRotation = transform.rotation;
 
         // 2. 終了時の位置と回転を計算
-        Vector3 goalPosition = gameDirector.goal.transform.position;
+        Vector3 goalPosition = GameDirector.instance.goal.transform.position;
         
         // ゴールからカメラへの方向ベクトル（正規化して長さを1にする）
         Vector3 dirToCamera = startPosition - goalPosition;
@@ -73,7 +72,7 @@ public class CameraController : MonoBehaviour
         }
 
         // 3. ゴール出現演出を開始（SetActiveにするだけで先ほどのスクリプトが動く）
-        gameDirector.goal.SetActive(true);
+        GameDirector.instance.goal.SetActive(true);
 
         // 4. 出現演出が終わるまで待機（先ほど作ったduration分待つ）
         yield return new WaitForSeconds(2.0f);
@@ -94,7 +93,7 @@ public class CameraController : MonoBehaviour
         }
 
         // 6. プレイヤーの操作を有効に戻す
-        gameDirector.StartTime();
+        GameDirector.instance.StartTime();
     }
     public void clear()
     {
@@ -107,14 +106,14 @@ public class CameraController : MonoBehaviour
         float offset = 4f;
         float k = 0.3f;
         Vector3 startPosition = transform.position;
-        Vector3 goalPosition = gameDirector.goal.transform.position;
+        Vector3 goalPosition = GameDirector.instance.goal.transform.position;
         Vector3 direction = goalPosition - startPosition;
         Vector3 endPosition = startPosition + k*direction;
         endPosition.x += offset;
-        while (elapsed < gameDirector.goalDisplayTime)
+        while (elapsed < GameDirector.instance.goalDisplayTime)
         {
             elapsed += Time.deltaTime;
-            float t = elapsed / gameDirector.goalDisplayTime;
+            float t = elapsed / GameDirector.instance.goalDisplayTime;
             transform.position = Vector3.Lerp(startPosition,endPosition,t);
             yield return null;
         }

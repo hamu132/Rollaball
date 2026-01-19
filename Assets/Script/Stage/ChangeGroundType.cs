@@ -61,8 +61,8 @@ public class ChangeGroundType : MonoBehaviour
         
         while (elapsed < totalDuration)
         {
-            
-            if (!StageRoot.isTimePaused)
+
+            if (!GameDirector.instance.isTimePaused)
             {
                 elapsed += Time.deltaTime;
                 // 現在のPropertyBlockの状態を取得

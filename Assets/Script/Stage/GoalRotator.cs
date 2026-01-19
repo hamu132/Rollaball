@@ -34,7 +34,7 @@ public class GoalRotator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (initialized && !StageRoot.isClear)
+        if (initialized && !GameDirector.instance.isClear)
         {
             transform.Rotate(Vector3.up, 0.5f * rotationSpeed * Time.deltaTime);
         }

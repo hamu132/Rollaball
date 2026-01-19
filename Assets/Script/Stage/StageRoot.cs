@@ -6,9 +6,8 @@ public class StageRoot : MonoBehaviour
 {
     private List<GameObject> groundObject = new List<GameObject>();
     //固定の変数を設定
+    [Header("ステージに関する固有変数")]
     public static float mainDuration = 4.5f;//床の生成時間
-    public static bool isTimePaused = false;//時間を進めるかどうか
-    public static bool isClear = false;
 
     public void enableGround(string tag = "Ground")
     {

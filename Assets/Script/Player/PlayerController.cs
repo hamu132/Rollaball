@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip move;
     [SerializeField] private AudioClip item;
     [SerializeField] private GameObject stageRootObject;
-    private GameDirector gameDirector;
     private PlayerInput playerInput;
     public static float timerf;
 
@@ -38,18 +37,17 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         playerInput = GetComponent<PlayerInput>();
-        gameDirector = stageRootObject.GetComponent<GameDirector>();
         count = 0;
         rb = GetComponent<Rigidbody>();
-        if (gameDirector.currentStage == 1)
+        if (GameDirector.instance.currentStage == 1)
         {
             transform.position = new Vector3(0,2,-90);
         }
-        else if (gameDirector.currentStage == 2)
+        else if (GameDirector.instance.currentStage == 2)
         {
             transform.position = new Vector3(0,34,-7);
         }
-        else if (gameDirector.currentStage == 3)
+        else if (GameDirector.instance.currentStage == 3)
         {
             transform.position = new Vector3(0,91,-17.5f);
         }
@@ -133,7 +131,11 @@ public class PlayerController : MonoBehaviour
             AudioManager.instance.PlaySE(item,0.2f);
             other.gameObject.SetActive(false);
             count += 1;
-            gameDirector.SetItemCount(count);
+            UpdateText.instance.SetItemCount(count);
+            if (count == GameDirector.instance.itemNum)
+            {
+                GameDirector.instance.cameraController.LookAtGoal();
+            }
         }
         //ゲームオーバー
         else if (other.gameObject.CompareTag("GameOver"))
@@ -152,8 +154,8 @@ public class PlayerController : MonoBehaviour
             if (SceneTransitionManager.instance != null)
             {
                 other.enabled = false;
-                gameDirector.GoalProcess();
-                StageRoot.isClear = true;
+                UIDirector.instance.goalProcess.Goal();
+                GameDirector.instance.isClear = true;
             }
         }
     }
