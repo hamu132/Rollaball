@@ -1,14 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
-using Unity.VisualScripting;
 //プレイヤーオブジェクトにアタッチ
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
-    private int count;
     
     //現在の速度、激しい初速、収束後の速度、速度変化割合
     private float m_currentSpeed;
@@ -26,7 +21,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip move;
     [SerializeField] private AudioClip item;
     [SerializeField] private GameObject stageRootObject;
-    private PlayerInput playerInput;
     public static float timerf;
 
     // Start is called before the first frame update
@@ -36,8 +30,6 @@ public class PlayerController : MonoBehaviour
     }
     void Start()
     {
-        playerInput = GetComponent<PlayerInput>();
-        count = 0;
         rb = GetComponent<Rigidbody>();
         if (GameDirector.instance.currentStage == 1)
         {
@@ -129,18 +121,13 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("PickUp"))
         {
             AudioManager.instance.PlaySE(item,0.2f);
-            other.gameObject.SetActive(false);
-            count += 1;
-            UpdateText.instance.SetItemCount(count);
-            if (count == GameDirector.instance.itemNum)
-            {
-                GameDirector.instance.cameraController.LookAtGoal();
-            }
+            Destroy(other.gameObject);
+            UpdateText.instance.SetItemCount();
+            GameDirector.instance.CheckItemCount();
         }
         //ゲームオーバー
         else if (other.gameObject.CompareTag("GameOver"))
         {
-            Debug.Log("Game Over");
             Explode();
             // トランジションを開始！
             if (SceneTransitionManager.instance != null)

@@ -8,9 +8,9 @@ public class UpdateText : MonoBehaviour
     void Awake() { instance = this; }
     public TextMeshProUGUI itemCountText;
     public TextMeshProUGUI micVolText;
-    public void SetItemCount(int count)
+    public void SetItemCount()
     {
-        itemCountText.text = "Count: " + count.ToString() + "/" + GameDirector.instance.itemNum;
+        itemCountText.text = $"Count: {GameDirector.instance.currentItemCount} / {GameDirector.instance.itemNum}";
     }
     public void SetMicVol(float vol)
     {
