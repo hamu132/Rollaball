@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
-//ボタンオブジェクトにアタッチ
+//UI全体の管理を行うディレクタークラス
 public class UIDirector : MonoBehaviour
 {
     public static UIDirector instance;

@@ -27,7 +27,7 @@ public class GameDirector : MonoBehaviour
     [Header("数値変数設定")]
     public float goalDisplayTime = 0.3f;
     public int currentStage = 1;
-    [Header("参照設定(Startで取得するのでD&D不要)")]
+    [Header("参照設定(初期化で取得するのでD&D不要)")]
     public PlayerInput playerInput;    // プレイヤーのInputAction
     public PlayerController playerController;
     public CameraController cameraController;
