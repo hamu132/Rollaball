@@ -9503,8 +9503,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   countText: {fileID: 628525214}
   slider: {fileID: 948589169}
+  sensitivitySlider: {fileID: 1255265765}
   stageRoot: {fileID: 1472036301}
-  sensitivity: 30
   thresholdR: 0.14
   thresholdG: 0.41
   thresholdB: 0.67

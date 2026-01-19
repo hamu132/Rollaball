@@ -14,10 +14,11 @@ public class MicInput : MonoBehaviour
     [Header("UI設定")]
     public TextMeshProUGUI countText;
     public Slider slider;
+    public Slider sensitivitySlider;
     public StageRoot stageRoot;
 
     [Header("音量感度設定")]
-    [Range(0.01f, 30.0f)] public float sensitivity = 1.0f;
+    private float sensitivity;
     [Range(0f, 1f)] public float thresholdR = 0.2f;
     [Range(0f, 1f)] public float thresholdG = 0.5f;
     [Range(0f, 1f)] public float thresholdB = 0.8f;
@@ -68,6 +69,7 @@ public class MicInput : MonoBehaviour
     {
         if (PlayerController.timerf == 0 && _micMode)
         {
+            sensitivity = sensitivitySlider.value;
             // 1. 波形データの取得と音量(RMS)計算
             float[] samples = new float[SAMPLE_COUNT];
             _audioSource.GetOutputData(samples, 0);
@@ -79,7 +81,7 @@ public class MicInput : MonoBehaviour
             float rms = Mathf.Sqrt(sum / SAMPLE_COUNT);
 
             // 2. 滑らかな音量の更新
-            float targetVolume = rms * sensitivity;
+            float targetVolume = rms * sensitivity * 100f;
             _currentVolume = Mathf.Lerp(_currentVolume, targetVolume, Time.deltaTime * 15f);
         }
         else
