@@ -11,7 +11,7 @@ public class GoalRotator : MonoBehaviour
     [SerializeField] private float heightOffset = 2.0f;
     [SerializeField] private float rotationSpeed = 720f;
     [SerializeField] private AnimationCurve landingCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-    private Vector3 targetPosition;
+    public Vector3 targetPosition;
     private bool initialized;
     //出現時、ちょっと演出を加えながら出現
     void Awake()
@@ -30,6 +30,10 @@ public class GoalRotator : MonoBehaviour
     public void OnEnable()
     {
         StartCoroutine(AnimateGoalAppearance());
+    }
+    public void OnDisable()
+    {
+        transform.position = targetPosition;
     }
     IEnumerator AnimateGoalAppearance()
     {

@@ -97,7 +97,8 @@ public class ChangeGroundType : MonoBehaviour
                 if (elapsed <= outroStartTime)
                 {
                     float emission = Mathf.Lerp(1.0f, 0.2f, periodCurveValue);
-                    propBlock.SetFloat("_EmissionIntensity", emission);
+                    //propBlock.SetFloat("_EmissionIntensity", emission);
+                    propBlock.SetFloat("_EmissionIntensity", 0.5f);
                 }
                 //アウトロ
                 else if(outroStartTime < elapsed)
