@@ -124,8 +124,8 @@ public class PlayerController : MonoBehaviour
         {
             AudioManager.instance.PlaySE(item,0.2f);
             Destroy(other.gameObject);
-            UpdateText.instance.SetItemCount();
             GameDirector.instance.CheckItemCount();
+            UpdateText.instance.SetItemCount();
         }
         //ゲームオーバー
         else if (other.gameObject.CompareTag("GameOver"))
