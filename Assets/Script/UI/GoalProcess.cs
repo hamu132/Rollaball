@@ -14,7 +14,7 @@ public class GoalProcess : MonoBehaviour
     [SerializeField] private RectTransform resultPanel;
     [Header("ベジェ曲線")]
     [SerializeField] private AnimationCurve landingCurve;
-    private float _moveTime = 2f;
+    private float _moveTime = 0.5f;
     private float _blackTime = 0.5f;
 
     //ゴールに触れた瞬間に発動
@@ -71,23 +71,32 @@ public class GoalProcess : MonoBehaviour
     {
         GameDirector.instance.playerController.OffGravity();
         float elapsed = 0f;
+        float apexT = GameDirector.instance.splineController.CalculateApexT();
+        //縮む→戻ると同時にジャンプ→頂上で一回転→到着
+        //カメラ：到着する時にさらにアップ
         while (elapsed < _moveTime)
         {
             elapsed += Time.deltaTime;
-            
-            // 0から1の間の線形な進捗率(t)を計算
-            float t = Mathf.Clamp01(elapsed / _moveTime);
-            
-            // AnimationCurveを使用して緩急をつけた値(0~1)を取得
-            float curvedT = landingCurve.Evaluate(t);
-            
-            // splineAnimateのNormalizedTime（0~1）に反映
-            GameDirector.instance.splineAnimate.NormalizedTime = curvedT;
+            float rawProgress = Mathf.Clamp01(elapsed / _moveTime); // 0〜1の線形な時間
 
+            // 1. まず、AnimationCurveで「動きの質感」を出す
+            float easedProgress = landingCurve.Evaluate(rawProgress);
+
+            // 2. 頂点（0.5）が apexT に来るように補正してスプラインに渡す
+            // 簡単な比率計算で、easedProgressが0.5の時に実世界のapexTになるように調整
+            float finalT;
+            if (easedProgress <= 0.5f) {
+                finalT = Mathf.Lerp(0f, apexT, easedProgress * 2f);
+            } else {
+                finalT = Mathf.Lerp(apexT, 1f, (easedProgress - 0.5f) * 2f);
+            }
+
+            GameDirector.instance.splineAnimate.NormalizedTime = finalT;
             yield return null;
         }
 
         // 最後に確実に1（終了地点）にする
         GameDirector.instance.splineAnimate.NormalizedTime = 1f;
     }
+
 }

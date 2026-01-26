@@ -498,40 +498,31 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
+      time: 0.012500001
+      value: -0.004716981
+      inSlope: 1.5583354
+      outSlope: 1.5583354
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.14474818
     - serializedVersion: 3
-      time: 0.27497995
-      value: 0.6997149
-      inSlope: -0.042433552
-      outSlope: -0.042433552
+      time: 0.49573874
+      value: 0.5014807
+      inSlope: 0.016366195
+      outSlope: 0.016366195
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.7511618
-      value: 0.12281895
-      inSlope: 1.2560108
-      outSlope: 1.2560108
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0.79828084
+      outWeight: 0.39618763
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: 1.4109712
+      outSlope: 1.4109712
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0
+      inWeight: 0.16319251
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -4591,9 +4582,9 @@ MonoBehaviour:
   m_Target: {fileID: 1861814437}
   m_PlayOnAwake: 0
   m_LoopMode: 0
-  m_Method: 0
-  m_Duration: 1
-  m_MaxSpeed: 88.959045
+  m_Method: 1
+  m_Duration: 17.79181
+  m_MaxSpeed: 5
   m_EasingMode: 1
   m_AlignmentMode: 1
   m_ObjectForwardAxis: 2
@@ -10991,6 +10982,7 @@ MonoBehaviour:
   mainCamera: {fileID: 961739752}
   stageRoot: {fileID: 1472036299}
   splineController: {fileID: 2056106869}
+  splineContainer: {fileID: 0}
   goalDisplayTime: 0.3
   currentStage: 2
   playerInput: {fileID: 0}
@@ -11702,6 +11694,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PickUp (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 698065858411703467, guid: a9637af2a1a86564fa1dd91b47f3561d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 698065858411703469, guid: a9637af2a1a86564fa1dd91b47f3561d,
         type: 3}
       propertyPath: m_IsTrigger
@@ -11780,6 +11777,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PickUp (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 698065858411703467, guid: a9637af2a1a86564fa1dd91b47f3561d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 698065858411703469, guid: a9637af2a1a86564fa1dd91b47f3561d,
         type: 3}
       propertyPath: m_IsTrigger
@@ -11857,6 +11859,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PickUp (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 698065858411703467, guid: a9637af2a1a86564fa1dd91b47f3561d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 698065858411703469, guid: a9637af2a1a86564fa1dd91b47f3561d,
         type: 3}
@@ -11950,6 +11957,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PickUp (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 698065858411703467, guid: a9637af2a1a86564fa1dd91b47f3561d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 698065858411703469, guid: a9637af2a1a86564fa1dd91b47f3561d,
         type: 3}
@@ -12410,6 +12422,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PickUp (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 698065858411703467, guid: a9637af2a1a86564fa1dd91b47f3561d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 698065858411703469, guid: a9637af2a1a86564fa1dd91b47f3561d,
         type: 3}
       propertyPath: m_IsTrigger
@@ -12803,6 +12820,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PickUp (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 698065858411703467, guid: a9637af2a1a86564fa1dd91b47f3561d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 698065858411703469, guid: a9637af2a1a86564fa1dd91b47f3561d,
         type: 3}

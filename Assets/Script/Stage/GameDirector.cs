@@ -25,7 +25,8 @@ public class GameDirector : MonoBehaviour
     public GameObject player;//プレイヤー
     public Camera mainCamera;          // メインカメラ
     public GameObject stageRoot;      // ステージのルートオブジェクト
-    public SplineController splineController;
+    public SplineController splineController; //プレイヤーのスプラインコントローラー
+    public SplineContainer splineContainer; //スプライン曲線オブジェクトのコンポーネント
     [Header("数値変数設定")]
     public float goalDisplayTime = 0.3f;
     public int currentStage = 1;
@@ -49,15 +50,10 @@ public class GameDirector : MonoBehaviour
         cameraController = mainCamera.GetComponent<CameraController>();
         currentStageTransform = stageRoot.transform.Find($"Stage{currentStage}");//ステージ
         goal = currentStageTransform.Find("Goal").gameObject;//ゴール
-        itemNum = currentStageTransform.Find("PickUpParent").childCount;//アイテムの総数
+        //itemNum = currentStageTransform.Find("PickUpParent").childCount;//アイテムの総数
+        itemNum = 1;
         goal.SetActive(false);
         StartTime();
-        test();
-    }
-
-    void test()
-    {
-        cameraController.LookAtGoal();
     }
 
     public void StopTime()
@@ -83,12 +79,9 @@ public class GameDirector : MonoBehaviour
     {
         Vector3 playerPosition = player.transform.position;
         Vector3 goalPosition = goal.transform.position;
-        goalPosition.y += 2f;
-        Vector3 middlePosition = playerPosition;
-        middlePosition.y += 3f;
-        // splineController.SetKnotWorldPosition(0,playerPosition);
-        // splineController.SetKnotWorldPosition(1,middlePosition);
-        // splineController.SetKnotWorldPosition(2,goalPosition);
+        goalPosition.y += 0.5f;
+        Vector3 middlePosition = (playerPosition+goalPosition)/2;
+        middlePosition.y += 2f;
         splineController.SetKnotWorldPosition(0,playerPosition);
         splineController.SetKnotWorldPosition(1,middlePosition);
         splineController.SetKnotWorldPosition(2,goalPosition);

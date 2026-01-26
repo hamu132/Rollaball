@@ -28,8 +28,24 @@ public class SplineController : MonoBehaviour
         // 3. スプラインに反映（構造体なので再代入が必要）
         splineContainer.Spline[index] = knot;
     }
-    // public void Start()
-    // {
-    //     SetKnotWorldPosition(1,new Vector3(1,1,1));
-    // }
+    public float CalculateApexT()
+    {
+        float highestY = -Mathf.Infinity;
+        float apexT = 0.5f; // 見つからなかった時のためのデフォルト
+        int precision = 100; // 100分割して調査
+
+        for (int i = 0; i <= precision; i++)
+        {
+            float t = (float)i / precision;
+            // スプライン上のローカル座標を取得
+            Vector3 localPos = splineContainer.EvaluatePosition(t);
+            
+            if (localPos.y > highestY)
+            {
+                highestY = localPos.y;
+                apexT = t;
+            }
+        }
+        return apexT;
+    }
 }
