@@ -8,11 +8,9 @@ public class CameraController : MonoBehaviour
     public GameObject player;
     private Vector3 offset;
     public bool isCameraActive;
-
     [Header("演出設定")]
     [SerializeField] private float cameraTransitionTime = 1.0f; // カメラが向くまでの時間
     [SerializeField] private float targetDistance = 5.0f;
-    // Start is called before the first frame update
     void Start()
     {
         offset = new Vector3(0, 10, -10);
@@ -20,7 +18,6 @@ public class CameraController : MonoBehaviour
     }
 
 
-    // Update is called once per frame
     void LateUpdate()
     {
         if(player != null && isCameraActive)
@@ -29,6 +26,7 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    //全てのアイテムを獲得した瞬間に発動
     public void LookAtGoal()
     {
         isCameraActive = false;

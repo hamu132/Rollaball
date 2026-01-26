@@ -27,6 +27,7 @@ public class GoalRotator : MonoBehaviour
             transform.Rotate(Vector3.up, 0.5f * rotationSpeed * Time.deltaTime);
         }
     }
+    //ここは自動的に発動（カメラのコルーチンが発動している途中でON）
     public void OnEnable()
     {
         StartCoroutine(AnimateGoalAppearance());

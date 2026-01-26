@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine.Splines; // 必須
 
 //黒いシネマティック演出・ゴール用UI演出
-//アタッチ
+//GoalCanvasオブジェクトにアタッチ
 public class GoalProcess : MonoBehaviour
 {
     [Header("シネマティック演出")]
@@ -13,13 +13,17 @@ public class GoalProcess : MonoBehaviour
     [SerializeField] private float barTargetHeight = 100f; // 黒枠の最終的な高さ
     [SerializeField] private RectTransform resultPanel;
     [Header("ベジェ曲線")]
+    [SerializeField] private AnimationCurve landingCurve;
+    private float _moveTime = 2f;
     private float _blackTime = 0.5f;
+
+    //ゴールに触れた瞬間に発動
     public void Goal()
     {
         topBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
         bottomBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
-        GameDirector.instance.SetSpline();
         StartCoroutine(GoalProcessRoutine());
+        StartCoroutine(MoveWithCurveRoutine());
     }
     IEnumerator GoalProcessRoutine()
     {
@@ -35,11 +39,9 @@ public class GoalProcess : MonoBehaviour
             // 上下の高さを更新
             topBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, currentHeight);
             bottomBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, currentHeight);
-
-            //GameDirector.instance.splineAnimate.Play();
-            
             yield return null;
         }
+
         //カメラを少しズラす
         GameDirector.instance.cameraController.clear();
 
@@ -64,5 +66,28 @@ public class GoalProcess : MonoBehaviour
         }
 
         resultPanel.anchoredPosition = targetPos; // 最後にピタッと合わせる
+    }
+    private IEnumerator MoveWithCurveRoutine()
+    {
+        GameDirector.instance.playerController.OffGravity();
+        float elapsed = 0f;
+        while (elapsed < _moveTime)
+        {
+            elapsed += Time.deltaTime;
+            
+            // 0から1の間の線形な進捗率(t)を計算
+            float t = Mathf.Clamp01(elapsed / _moveTime);
+            
+            // AnimationCurveを使用して緩急をつけた値(0~1)を取得
+            float curvedT = landingCurve.Evaluate(t);
+            
+            // splineAnimateのNormalizedTime（0~1）に反映
+            GameDirector.instance.splineAnimate.NormalizedTime = curvedT;
+
+            yield return null;
+        }
+
+        // 最後に確実に1（終了地点）にする
+        GameDirector.instance.splineAnimate.NormalizedTime = 1f;
     }
 }

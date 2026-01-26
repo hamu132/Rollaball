@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 //プレイヤーオブジェクトにアタッチ
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody rb;
+    [SerializeField] private Rigidbody rb;
     
     //現在の速度、激しい初速、収束後の速度、速度変化割合
     private float m_currentSpeed;
@@ -30,16 +30,19 @@ public class PlayerController : MonoBehaviour
     {
         rb.velocity = Vector3.zero;
     }
+    public void OffGravity()
+    {
+        rb.isKinematic = true;
+    }
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
         if (GameDirector.instance.currentStage == 1)
         {
             transform.position = new Vector3(0,2,-90);
         }
         else if (GameDirector.instance.currentStage == 2)
         {
-            transform.position = new Vector3(0,34,-7);
+            transform.position = new Vector3(5,34,-7);
         }
         else if (GameDirector.instance.currentStage == 3)
         {
@@ -48,18 +51,21 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (m_isInitialDash)
+        if (!rb.isKinematic)
         {
-            m_currentSpeed = Mathf.Lerp(m_currentSpeed, m_normalSpeed, m_decayRate * Time.fixedDeltaTime);
-            Vector3 direction = new Vector3 (m_moveInput.x, 0, m_moveInput.y);
-            direction *= m_currentSpeed;
-            direction.y = rb.velocity.y;
-            rb.velocity = direction;
-        }
-        else
-        {
-            Vector3 v = new Vector3(rb.velocity.x*0.5f,rb.velocity.y,rb.velocity.z*0.5f);
-            rb.velocity =v;
+            if (m_isInitialDash)
+            {
+                m_currentSpeed = Mathf.Lerp(m_currentSpeed, m_normalSpeed, m_decayRate * Time.fixedDeltaTime);
+                Vector3 direction = new Vector3 (m_moveInput.x, 0, m_moveInput.y);
+                direction *= m_currentSpeed;
+                direction.y = rb.velocity.y;
+                rb.velocity = direction;
+            }
+            else
+            {
+                Vector3 v = new Vector3(rb.velocity.x*0.5f,rb.velocity.y,rb.velocity.z*0.5f);
+                rb.velocity =v;
+            }
         }
     }
     //キーボード入力で床を制御

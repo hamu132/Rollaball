@@ -52,7 +52,12 @@ public class GameDirector : MonoBehaviour
         itemNum = currentStageTransform.Find("PickUpParent").childCount;//アイテムの総数
         goal.SetActive(false);
         StartTime();
-        
+        test();
+    }
+
+    void test()
+    {
+        cameraController.LookAtGoal();
     }
 
     public void StopTime()
@@ -67,11 +72,13 @@ public class GameDirector : MonoBehaviour
         cameraController.isCameraActive = true;
         isTimePaused = false;
     }
+    //アイテムを獲得した時発動
     public void CheckItemCount()
     {
         currentItemCount++;
         if (currentItemCount == itemNum) cameraController.LookAtGoal();
     }
+    //ゴールに触れた時発動
     public void SetSpline()
     {
         Vector3 playerPosition = player.transform.position;

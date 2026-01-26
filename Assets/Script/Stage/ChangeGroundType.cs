@@ -32,6 +32,7 @@ public class ChangeGroundType : MonoBehaviour
         propBlock.SetFloat("_FillAmount", 1.0f); 
         targetRenderer.SetPropertyBlock(propBlock);
     }
+    //マイクが一定時間反応した瞬間に発動
     public void enableGround()
     {
         StartFillAnimation();
