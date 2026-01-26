@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using UnityEngine.Splines; // 必須
+using UnityEngine.Splines;
+using System; // 必須
 
 //黒いシネマティック演出・ゴール用UI演出
 //GoalCanvasオブジェクトにアタッチ
@@ -14,7 +15,10 @@ public class GoalProcess : MonoBehaviour
     [SerializeField] private RectTransform resultPanel;
     [Header("ベジェ曲線")]
     [SerializeField] private AnimationCurve landingCurve;
-    private float _moveTime = 0.5f;
+
+    private GameObject player;
+    private GameObject goal;
+    private float _moveTime = 0.8f;
     private float _blackTime = 0.5f;
 
     //ゴールに触れた瞬間に発動
@@ -24,6 +28,11 @@ public class GoalProcess : MonoBehaviour
         bottomBar.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, 0);
         StartCoroutine(GoalProcessRoutine());
         StartCoroutine(MoveWithCurveRoutine());
+    }
+    void Start()
+    {
+        player = GameDirector.instance.player;
+        goal = GameDirector.instance.goal;
     }
     IEnumerator GoalProcessRoutine()
     {
@@ -71,6 +80,29 @@ public class GoalProcess : MonoBehaviour
     {
         GameDirector.instance.playerController.OffGravity();
         float elapsed = 0f;
+
+        while (elapsed < 1f)
+        {
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        elapsed = 0f;
+
+
+        //[回転の変数]
+        Vector3 direction = goal.transform.position - player.transform.position;
+        direction.y = 0;
+        Quaternion targetRotation = Quaternion.LookRotation(direction);
+        // 1.ゴールの方向を向く
+        while (Quaternion.Angle(player.transform.rotation, targetRotation)<0.1f)
+        {
+            float rotationSpeed = 10f;
+            Quaternion rotation = Quaternion.Slerp(player.transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+            GameDirector.instance.playerController.SetRotation(rotation);
+            yield return null;
+        }
+
+
         float apexT = GameDirector.instance.splineController.CalculateApexT();
         //縮む→戻ると同時にジャンプ→頂上で一回転→到着
         //カメラ：到着する時にさらにアップ
@@ -78,11 +110,9 @@ public class GoalProcess : MonoBehaviour
         {
             elapsed += Time.deltaTime;
             float rawProgress = Mathf.Clamp01(elapsed / _moveTime); // 0〜1の線形な時間
+            float easedProgress = landingCurve.Evaluate(rawProgress);// 緩急がついた進捗
 
-            // 1. まず、AnimationCurveで「動きの質感」を出す
-            float easedProgress = landingCurve.Evaluate(rawProgress);
-
-            // 2. 頂点（0.5）が apexT に来るように補正してスプラインに渡す
+            // 頂点（0.5）が apexT に来るように補正してスプラインに渡す
             // 簡単な比率計算で、easedProgressが0.5の時に実世界のapexTになるように調整
             float finalT;
             if (easedProgress <= 0.5f) {
@@ -90,13 +120,27 @@ public class GoalProcess : MonoBehaviour
             } else {
                 finalT = Mathf.Lerp(apexT, 1f, (easedProgress - 0.5f) * 2f);
             }
-
             GameDirector.instance.splineAnimate.NormalizedTime = finalT;
+
+            // 2. ★空中回転の計算
+            float flipAngle = 0f;
+            float rotationStartT = 0.2f;
+            float rotationEndT = 0.8f;
+            float flipTotalAngle = 360f;
+            if (rawProgress >= rotationStartT && rawProgress <= rotationEndT)
+            {
+                // 回転区間内での進捗（0〜1）を計算
+                float flipT = (rawProgress - rotationStartT) / (rotationEndT - rotationStartT);
+                // なだらかに回し始めるなら、ここにも SmoothStep を使うと綺麗です
+                float smoothedFlipT = Mathf.SmoothStep(0, 1, flipT);
+                flipAngle = smoothedFlipT * flipTotalAngle;
+            }
+
+            // 3. ★回転の適用
+            Quaternion flipRotation = Quaternion.Euler(0, 0, flipAngle);
+            GameDirector.instance.playerController.SetRotation(flipRotation);
             yield return null;
         }
-
-        // 最後に確実に1（終了地点）にする
-        GameDirector.instance.splineAnimate.NormalizedTime = 1f;
     }
 
 }

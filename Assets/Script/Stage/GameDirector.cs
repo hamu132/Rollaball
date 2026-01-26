@@ -22,11 +22,11 @@ public class GameDirector : MonoBehaviour
     }
 
     [Header("参照設定(オブジェクト系)")]
-    public GameObject player;//プレイヤー
-    public Camera mainCamera;          // メインカメラ
-    public GameObject stageRoot;      // ステージのルートオブジェクト
-    public SplineController splineController; //プレイヤーのスプラインコントローラー
-    public SplineContainer splineContainer; //スプライン曲線オブジェクトのコンポーネント
+    public GameObject player;                   //プレイヤー
+    public Camera mainCamera;                   // メインカメラ
+    public GameObject stageRoot;                // ステージのルートオブジェクト
+    public SplineController splineController;   //プレイヤーのスプラインコントローラー
+    public SplineContainer splineContainer;     //スプライン曲線オブジェクトのコンポーネント
     [Header("数値変数設定")]
     public float goalDisplayTime = 0.3f;
     public int currentStage = 1;

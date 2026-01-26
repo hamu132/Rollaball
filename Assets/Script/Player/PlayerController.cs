@@ -78,9 +78,14 @@ public class PlayerController : MonoBehaviour
 
                 // 徐々に（滑らかに）向かせる場合：
                 float rotationSpeed = 10f; // インスペクターで調整できるようにすると◎
-                modelObject.transform.rotation = Quaternion.Slerp(modelObject.transform.rotation, targetRotation, Time.fixedDeltaTime * rotationSpeed);
+                SetRotation(Quaternion.Slerp(modelObject.transform.rotation, targetRotation, Time.fixedDeltaTime * rotationSpeed));
             }
         }
+    }
+    //回転をセットする関数（GoalProcess.csでも呼ばれる）
+    public void SetRotation(Quaternion rotation)
+    {
+        modelObject.transform.localRotation = rotation;
     }
     //キーボード入力で床を制御
     public void OnFloor1(InputAction.CallbackContext context)
