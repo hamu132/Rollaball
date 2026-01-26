@@ -11455,6 +11455,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7280643859570086967, guid: 78b119c97f380604b974dd7af4938be7,
         type: 3}
+      propertyPath: modelObject
+      value: 
+      objectReference: {fileID: 1336772127422540840}
+    - target: {fileID: 7280643859570086967, guid: 78b119c97f380604b974dd7af4938be7,
+        type: 3}
       propertyPath: stageRootObject
       value: 
       objectReference: {fileID: 1472036299}
@@ -11513,6 +11518,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78b119c97f380604b974dd7af4938be7, type: 3}
+--- !u!1 &1336772127422540840 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1725287023805265892, guid: 78b119c97f380604b974dd7af4938be7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1336772127422540839}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1384587763649397037
 PrefabInstance:
   m_ObjectHideFlags: 0

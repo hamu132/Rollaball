@@ -42,7 +42,8 @@ public class GameDirector : MonoBehaviour
     public bool isClear = false;
     public bool isTimePaused = false;//時間を進めるかどうか
     public float currentItemCount = 0;
-    void Initialize()
+    //リスタート時、毎回呼ばれる
+    public void Initialize()
     {
         playerInput = player.GetComponent<PlayerInput>();
         splineAnimate = player.GetComponent<SplineAnimate>();

@@ -19,8 +19,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip gameOver;
     [SerializeField] private AudioClip wall;
     [SerializeField] private AudioClip move;
-    [SerializeField] private AudioClip item;
-    [SerializeField] private GameObject stageRootObject;
+    [SerializeField] private AudioClip item;//音
+    [SerializeField] private GameObject stageRootObject;//ステージのルートオブジェクト
+    [SerializeField] private GameObject modelObject;//プレイヤーの子オブジェクトで、マテリアル用
     public static float timerf;
 
 
@@ -65,6 +66,19 @@ public class PlayerController : MonoBehaviour
             {
                 Vector3 v = new Vector3(rb.velocity.x*0.5f,rb.velocity.y,rb.velocity.z*0.5f);
                 rb.velocity =v;
+            }
+            // 1. 速度ベクトルを取得（水平方向の回転に限定するため、Y成分は0にするのが一般的）
+            Vector3 moveDirection = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+
+            // 2. 速度が一定以上ある時だけ回転を更新（止まっている時に勝手に正面を向かないようにする）
+            if (moveDirection.sqrMagnitude > 0.01f) 
+            {
+                // 進行方向を向く回転（目標の角度）を計算
+                Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+
+                // 徐々に（滑らかに）向かせる場合：
+                float rotationSpeed = 10f; // インスペクターで調整できるようにすると◎
+                modelObject.transform.rotation = Quaternion.Slerp(modelObject.transform.rotation, targetRotation, Time.fixedDeltaTime * rotationSpeed);
             }
         }
     }
